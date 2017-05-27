@@ -7,6 +7,7 @@ class Users{
 	public $roles = 0;
 	public $person = '';
 	public $hinhanh = '';
+	public $id_tieuchuan = array();
 	public $logs = '';
 
 	private $_mongo;
@@ -53,7 +54,8 @@ class Users{
 			'password'=>md5($this->password),
 			'roles'=>$this->roles,
 			'person'=>$this->person,
-			'hinhanh' => $this->hinhanh);
+			'hinhanh' => $this->hinhanh,
+			'id_tieuchuan' => $this->id_tieuchuan);
 		return $this->_collection->insert($query);
 	}
 	public function push_logs_in(){
@@ -73,7 +75,8 @@ class Users{
 			'password'=>md5($this->password),
 			'roles'=>$this->roles,
 			'person'=>$this->person,
-			'hinhanh' => $this->hinhanh));
+			'hinhanh' => $this->hinhanh,
+			'id_tieuchuan' => $this->id_tieuchuan));
 		return $this->_collection->update($condition, $query);
 	}
 
@@ -93,9 +96,6 @@ class Users{
 		return $this->_collection->remove(array('_id'=> new MongoId($this->id)));
 	}
 
-	//public function insert_list(){
-
-	//}
 	public function isLoggedIn() {
 		return isset($_SESSION['user_id']);
 	}
