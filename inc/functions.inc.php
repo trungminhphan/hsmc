@@ -175,7 +175,6 @@ function check_permis($roles){
 		</div>
 		';
 		require_once('footer.php');
-
 	echo '<script src="assets/plugins/gritter/js/jquery.gritter.js"></script>
 	<script src="assets/js/apps.min.js"></script>
 	<script>
@@ -200,7 +199,7 @@ function showCategories($categories, $id_parent = '', $char = '', $arr=array()){
         // Nếu là chuyên mục con thì hiển thị
         if ($item['id_parent'] == $id_parent){
             echo '<option value="'.$item['_id'].'"'.(in_array($item['_id'], $arr) ? ' selected':'').'>';
-                echo $char . $item['ten'];
+                echo $char . $item['ma'] .'. ' .$item['ten'];
             echo '</option>';
             // Xóa chuyên mục đã lặp
             unset($categories[$key]);
@@ -215,7 +214,7 @@ function showCategories_Tree($categories, $id_parent = '', $collect=''){
     foreach ($categories as $key => $item){
         // Nếu là chuyên mục con thì hiển thị
         if ($item['id_parent'] == $id_parent){
-        	echo '<li data-jstree=\'{"opened":true}\'>' . $item['ten'] . '<span>&nbsp;&nbsp;&nbsp;<a href="get.'.$collect.'.html?id='.$item['_id'].'&act=edit#modal-'.$collect.'" data-toggle="modal" class="sua'.$collect.'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;<a href="get.'.$collect.'.html?id='.$item['_id'].'&act=del#modal-del'.$collect.'" data-toggle="modal" class="sua'.$collect.'" ><i class="fa fa-trash-o"></i></a></span>';
+        	echo '<li data-jstree=\'{"opened":true}\'>' . $item['ma'] .'. '.$item['ten'] . '<span>&nbsp;&nbsp;&nbsp;<a href="get.'.$collect.'.html?id='.$item['_id'].'&act=edit#modal-'.$collect.'" data-toggle="modal" class="sua'.$collect.'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;<a href="get.'.$collect.'.html?id='.$item['_id'].'&act=del#modal-del'.$collect.'" data-toggle="modal" class="sua'.$collect.'" ><i class="fa fa-trash-o"></i></a></span>';
             // Xóa chuyên mục đã lặp
             unset($categories[$key]);
             // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp

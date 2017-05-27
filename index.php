@@ -53,11 +53,10 @@ $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 					<div class="panel-heading-btn">
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 					</div>
-
 					<h4 class="panel-title">CÁC MINH CHỨNG MỚI NHẤT</h4>
 				</div>
-				<div class="panel-body">
-					<div class="height-sm" data-scrollbar="true">
+				<div class="panel-body" style="height:470px;">
+					<div data-scrollbar="true" style="height:430px !important;">
 						<ul class="media-list media-list-with-divider media-messaging">
 						<?php for($i=1; $i<=10; $i++): ?>
 							<li class="media media-sm">

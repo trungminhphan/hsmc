@@ -16,11 +16,11 @@ class TieuChuan {
     }
 
     public function get_all_list(){
-        return $this->_collection->find()->sort(array('ten'=>-1));
+        return $this->_collection->find()->sort(array('ma'=>1));
     }
 
     public function get_list_condition($condition){
-        return $this->_collection->find($condition)->sort(array('ten'=>-1));
+        return $this->_collection->find($condition)->sort(array('ma'=>1));
     }
 
     public function get_one(){
