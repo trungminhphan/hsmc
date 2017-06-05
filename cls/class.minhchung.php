@@ -70,7 +70,7 @@ class MinhChung {
         	'noidung' => $this->noidung,
         	'dinhkem' => $this->dinhkem,
         	'date_post' => new MongoDate(),
-        	'id_user' => new MongoId($this->id)
+        	'id_user' => new MongoId($this->id_user)
         ));
         $condition = array('_id' => new MongoId($this->id));
         return $this->_collection->update($condition, $query);

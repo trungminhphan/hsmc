@@ -37,7 +37,6 @@ $minhchung->ngayky = $ngayky ? new MongoDate(convert_date_yyyy_mm_dd($ngayky)) :
 $minhchung->noidung = $noidung;
 $minhchung->dinhkem = $arr_dinhkem;
 $minhchung->id_user = $id_user;
-
 $l = explode("?", $url); $url = $l[0];
 if($act == 'edit'){
 	$minhchung->id = $id;

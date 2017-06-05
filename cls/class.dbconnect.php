@@ -3,8 +3,8 @@ class DBConnect{
 	const HOST = 'localhost';
 	const PORT = 27017;
 	const DBNAME = 'hosominhchung';
-	//const USERNAME = 'root';
-	//const PASSWORD = 'root';
+	const USERNAME = 'root';
+	const PASSWORD = 'root';
 	private static $instance;
 	public $connection; 
 	public $database;

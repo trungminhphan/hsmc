@@ -61,5 +61,13 @@ class TieuChuan {
         else return false;
     }
 
+    public function check_dmtieuchuan($id_tieuchuan){
+        $query = array('id_parent' => new MongoId($id_tieuchuan));
+        $field = array('_id' => true);
+        $result = $this->_collection->findOne($query, $field);
+        if(isset($result['_id']) && $result['_id']) return true;
+        else return false;
+    }
+
 }
 ?>
