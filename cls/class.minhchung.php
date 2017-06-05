@@ -73,12 +73,20 @@ class MinhChung {
         	'id_user' => new MongoId($this->id)
         ));
         $condition = array('_id' => new MongoId($this->id));
-        return $this->_collection->insert($condition, $query);
+        return $this->_collection->update($condition, $query);
     }
 
     public function delete(){
         $query = array('_id' => new MongoId($this->id));
         return $this->_collection->remove($query);
+    }
+
+    public function check_dinhkem($aliasname){
+        $query = array('dinhkem.aliasname' => $aliasname);
+        $filed = array('_id' => true);
+        $result = $this->_collection->findOne($query, $filed);
+        if(isset($result['_id']) && $result['_id']) return true;
+        else return false;
     }
 }
 ?>

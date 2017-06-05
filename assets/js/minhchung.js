@@ -67,3 +67,13 @@ function delete_file(){
         });
     });
 }
+
+function remove_form_file(){
+    var _this;
+    $(".delete_file").click(function(){
+        link_delete = $(this).attr("href"); _this = $(this);
+        _this.parents("div.items").fadeOut("slow", function(){
+            $(this).remove();
+        });
+    });
+}

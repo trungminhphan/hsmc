@@ -59,14 +59,12 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                                 <td>'.$vb.'</td>
                                 <td>'.$u['person'].'</td>
                                 <td class="text-center">
-                                <a href="#"><i class="fa fa-copy"></i></a>
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                                <a href="#"><i class="fa fa-edit"></i></a>
-                                <a href="#"><i class="fa fa-trash"></i></a>
+                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=copy#modal-minhchung" class="copyminhchung" data-toggle="modal"><i class="fa fa-copy"></i></a>
+                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>
+                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=edit#modal-minhchung" class="suaminhchung" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                <a href="#modal-xoaminhchung" name="'.$mc['_id'].'" data-toggle="modal" onclick="return false;" class="xoaminhchung"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>';$i++;
-                            //<td class="text-center"><a href="get.loaivanban.html?id='.$cv['_id'].'&act=del" onclick="return confirm(\'Chắc chắn muốn xoá?\');"><i class="fa fa-trash"></i></a></td>
-                            //<td class="text-center"><a href="get.loaivanban.html?id='.$cv['_id'].'&act=edit#modal-loaivanban" data-toggle="modal" class="sualoaivanban"><i class="fa fa-pencil"></i></a></td>
                         }
                     }
                     ?>
@@ -179,6 +177,46 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
     </div>
 </form>
 </div>
+<div class="modal fade" id="modal-xemminhchung">
+<form action="post.minhchung.html" method="POST" class="form-horizontal" data-parsley-validate="true" name="minhchungform" id="minhchungform">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><i class="fa fa-info"></i> THÔNG TIN MINH CHỨNG</h4>
+            </div>
+            <div class="modal-body" id="thongtinminhchung">
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-sm btn-primary" data-dismiss="modal">Đóng</a>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+<div class="modal fade" id="modal-xoaminhchung">
+    <form action="post.minhchung.html" method="POST" class="form-horizontal" data-parsley-validate="true" name="minhchungform" id="minhchungform">
+        <input type="hidden" name="id" id="id_del" />
+        <input type="hidden" name="act" id="act" value="del"/>
+        <input type="hidden" name="url" id="url" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><i class="fa fa-trash"></i> XÁC NHẬN XOÁ</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Chắc chắn xoá?</h3>
+                <p>Xoá! dữ liệu sẽ bị mất không thể khôi phục.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-sm btn-white" data-dismiss="modal"><i class="fa fa-close"></i> Không xoá</a>
+                <button type="submit" name="submit" id="submit" class="btn btn-sm btn-primary"><i class="fa fa-trash"></i> Đồng ý xoá</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div style="clear:both;"></div>
 <?php require_once('footer.php'); ?>
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
@@ -200,13 +238,44 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
             var _link = $(this).attr("href");
             $.getJSON(_link, function(data){
                 $("#id").val(data.id); $("#act").val(data.act);
-                $("#ten").val(data.ten); 
+                $("#ten").val(data.ten);
+                $("#id_tieuchuan").val(data.id_tieuchuan);$("#id_tieuchuan").select2();
+                $("#id_loaivanban").val(data.id_loaivanban);$("#id_loaivanban").select2();
+                $("#sovanban").val(data.sovanban);$("#sovanbanden").val(data.sovanbanden);
+                $("#kyhieu").val(data.kyhieu);$("#noiphathanh").val(data.noiphathanh);
+                $("#nguoiky").val(data.nguoiky);$("#ngayky").val(data.ngayky);
+                $("#noidung").val(data.noidung);
+                $("#dinhkem_list").html(data.dinhkem);delete_file();
+            });
+        });
+        $(".copyminhchung").click(function(){
+            var _link = $(this).attr("href");
+            $.getJSON(_link, function(data){
+                $("#id").val(""); $("#act").val(data.act);
+                $("#ten").val(data.ten);
+                $("#id_tieuchuan").val("");$("#id_tieuchuan").select2();
+                $("#id_loaivanban").val(data.id_loaivanban);$("#id_loaivanban").select2();
+                $("#sovanban").val(data.sovanban);$("#sovanbanden").val(data.sovanbanden);
+                $("#kyhieu").val(data.kyhieu);$("#noiphathanh").val(data.noiphathanh);
+                $("#nguoiky").val(data.nguoiky);$("#ngayky").val(data.ngayky);
+                $("#noidung").val(data.noidung);
+                $("#dinhkem_list").html(data.dinhkem);remove_form_file();
+            });
+        });
+
+        $(".xoaminhchung").click(function(){
+            var _id = $(this).attr("name");
+            $("#id_del").val(_id);
+        });
+        $(".xemminhchung").click(function(){
+            var _link = $(this).attr("href");
+            $.get(_link, function(data){
+                $("#thongtinminhchung").html(data);
             });
         });
         $(".ngaythangnam").datepicker({todayHighlight:!0});
         $(".ngaythangnam").inputmask();
     	$(".select2").select2();$(".progress").hide();
         App.init();
-
     });
 </script>

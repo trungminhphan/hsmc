@@ -72,7 +72,7 @@ if($id){
     $id_congty = isset($edit_user['id_congty']) ? $edit_user['id_congty'] : '';
 	$roles = $edit_user['roles'];
 	$person = $edit_user['person'];
-    $id_tieuchuan = $edit_user['id_tieuchuan'];
+    $id_tieuchuan = isset($edit_user['id_tieuchuan']) ? $edit_user['id_tieuchuan'] : '';
 }
 ?>
 <link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />

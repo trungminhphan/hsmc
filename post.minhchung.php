@@ -45,6 +45,20 @@ if($act == 'edit'){
 		if($url) transfers_to($url . '?msg=Chỉnh sửa thành công.');
 		else transfers_to('minhchung.htmlmsg=Chỉnh sửa thành công!');
 	}
+} else if($act == 'del'){
+	$minhchung->id = $id; $mc = $minhchung->get_one();
+	$minhchung->delete();
+	if(isset($mc['dinhkem']) && $mc['dinhkem']){
+		foreach($mc['dinhkem'] as $dk){
+			if(file_exists($uploads_folder . $dk['aliasname'])){
+				if(!$minhchung->check_dinhkem($dk['aliasname'])){
+					@unlink($uploads_folder . $dk['aliasname']);
+				}
+			}
+		}
+	}
+	if($url) transfers_to($url . '?msg=Xoá thành công.');
+	else transfers_to('minhchung.html?msg=Xoá thành công!');	
 } else {
 	if($minhchung->insert()){
 		if($url) transfers_to($url . '?msg=Thêm thành công.');
