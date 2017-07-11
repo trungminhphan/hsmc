@@ -127,17 +127,16 @@ $user_default = $users->get_one_default();
                     	<li class="divider"></li>
                         <li><a href="thongketheothoigiannhap.html">Theo thời gian nhập</a></li>
                         <li class="divider"></li>
-                        <li><a href="thongketheotieuchi.html">Theo tiêu chí</a></li>
+                        <li><a href="thongketheotieuchi.html">Theo Tiêu chuẩn - Tiêu chí</a></li>
                         <li class="divider"></li>
                     </ul>
                 </li>
-               <li>
+                <li>
                     <a href="timkiem.html">
                         <i class="fa fa-search"></i> 
                         <span>TÌM KIẾM</span>
                     </a>
                 </li>
-                
                 <li class="menu-control menu-control-right">
                     <a href="#" data-click="next-menu"><i class="fa fa-angle-right"></i></a>
                 </li>

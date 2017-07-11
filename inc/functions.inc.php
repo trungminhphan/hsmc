@@ -225,6 +225,22 @@ function showCategories_Tree($categories, $id_parent = '', $collect=''){
     echo '</ul>';
 }
 
+function showCategories_Tree_1($categories, $id_parent = '', $collect=''){
+	echo '<ul>';
+    foreach ($categories as $key => $item){
+        // Nếu là chuyên mục con thì hiển thị
+        if ($item['id_parent'] == $id_parent){
+        	echo '<li data-jstree=\'{"opened":true}\'><a href="chitiettieuchuan.html">' . $item['ma'] .'. '.$item['ten'] . '</a>';
+            // Xóa chuyên mục đã lặp
+            unset($categories[$key]);
+            // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
+            showCategories_Tree_1($categories, $item['_id'], $collect);
+            echo '</li>';
+        }
+    }
+    echo '</ul>';
+}
+
 function showCategories_Menu($categories, $id_parent = '', $level=0){
     echo '<ul id="nav" class="hidden-xs">';
     foreach ($categories as $key => $item){

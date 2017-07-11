@@ -225,6 +225,10 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <script src="assets/plugins/select2/dist/js/select2.min.js"></script>
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="assets/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/table-manage-default.demo.min.js"></script>
 <script type="text/javascript" src="assets/js/minhchung.js"></script>
 <script src="assets/js/apps.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
@@ -276,6 +280,6 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
         $(".ngaythangnam").datepicker({todayHighlight:!0});
         $(".ngaythangnam").inputmask();
     	$(".select2").select2();$(".progress").hide();
-        App.init();
+        App.init();TableManageDefault.init();
     });
 </script>
