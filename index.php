@@ -3,7 +3,6 @@ $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $minhchung = new MinhChung();$tieuchuan = new TieuChuan();
 $minhchung_list = $minhchung->get_all_list();
 $tieuchuan_list = $tieuchuan->get_all_list();
-
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
@@ -74,7 +73,7 @@ $tieuchuan_list = $tieuchuan->get_all_list();
 					</div>
 					<h4 class="panel-title">CÁC MINH CHỨNG</h4>
 				</div>
-				<div class="panel-body" style="height:650px;">
+				<div class="panel-body" style="height:650px;overflow: scroll;">
 					<div id="jstree-default">
 	                <?php
 	                    if($tieuchuan_list){
