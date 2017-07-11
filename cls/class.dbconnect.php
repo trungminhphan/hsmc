@@ -1,6 +1,6 @@
 <?php
 class DBConnect{
-	const HOST = 'localhost';
+	const HOST = 'mgdb1.agu.edu.vn';
 	const PORT = 27017;
 	const DBNAME = 'hosominhchung';
 	const USERNAME = 'root';

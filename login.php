@@ -93,7 +93,7 @@ if(isset($_POST['submit'])){
                 <!-- end login-header -->
                 <!-- begin login-content -->
                 <div class="login-content">
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="margin-bottom-0" id="loginform">
+                    <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" class="margin-bottom-0" id="loginform">
                         <input type="hidden" name="url" id="url" value="<?php echo isset($url) ? $url : ''; ?>">
                         <div class="form-group m-b-15">
                             <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Tài khoản đăng nhập" required />
