@@ -230,7 +230,7 @@ function showCategories_Tree_1($categories, $id_parent = '', $collect=''){
     foreach ($categories as $key => $item){
         // Nếu là chuyên mục con thì hiển thị
         if ($item['id_parent'] == $id_parent){
-        	echo '<li data-jstree=\'{"opened":true}\'><a href="chitiettieuchuan.html">' . $item['ma'] .'. '.$item['ten'] . '</a>';
+        	echo '<li data-jstree=\'{"opened":true}\'><a href="thongketheotieuchi.html?id_tieuchuan='.$item['_id'].'">' . $item['ma'] .'. '.$item['ten'] . '</a>';
             // Xóa chuyên mục đã lặp
             unset($categories[$key]);
             // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp

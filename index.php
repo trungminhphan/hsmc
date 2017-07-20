@@ -3,6 +3,7 @@ $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $minhchung = new MinhChung();$tieuchuan = new TieuChuan();
 $minhchung_list = $minhchung->get_all_list();
 $tieuchuan_list = $tieuchuan->get_all_list();
+$minhchung_list = $minhchung->get_list_limit(10);
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
@@ -24,7 +25,7 @@ $tieuchuan_list = $tieuchuan->get_all_list();
 							<div class="widget widget-stats bg-green">
 								<div class="stats-icon"><i class="fa fa-book"></i></div>
 								<div class="stats-info">
-									<h4>TIÊU CHÍ - NHÓM TIÊU CHÍ</h4>
+									<h4>TIÊU CHUẨN - NHÓM TIÊU CHÍ</h4>
 									<p><?php echo $tieuchuan_list->count(); ?></p>	
 								</div>
 								<div class="stats-link">
@@ -50,14 +51,16 @@ $tieuchuan_list = $tieuchuan->get_all_list();
 							<h1 class="page-header"><i class="fa fa-crosshairs"></i> Minh chứng mới nhất</h1>
 							<div data-scrollbar="true" style="height:430px !important;">
 								<ul class="media-list media-list-with-divider media-messaging">
-								<?php for($i=1; $i<=10; $i++): ?>
+								<?php if($minhchung_list) : ?>
+								<?php foreach ($minhchung_list as $mc): ?>
 									<li class="media media-sm">
 										<div class="media-body">
-											<h5 class="media-heading"><a href="chitietminhchung.html?id=">Tên hồ sơ minh chứng</a></h5>
-											<p>Ngày nhập: 25.05.2017</p>
+											<h5 class="media-heading"><a href="chitietminhchung.html?id=<?php echo $mc['_id']; ?>"><?php echo $mc['ten']; ?></a></h5>
+											<p>Ngày nhập: <?php echo date("d/m/Y", $mc['date_post']->sec); ?></p>
 										</div>
 									</li>
-								<?php endfor; ?>
+								<?php endforeach; ?>
+								<?php endif; ?>
 								</ul>
 							</div>
 						</div>

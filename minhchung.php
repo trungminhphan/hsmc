@@ -31,6 +31,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                     <thead>
                         <tr>
                             <th>STT</th>
+                            <th>Ký hiệu</th>
                             <th>Tên</th>
                             <th>Ngày ký</th>
                             <th>Người ký</th>
@@ -51,6 +52,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             $users->id = $mc['id_user']; $u = $users->get_one();
                             echo '<tr>
                                 <td>'.$i.'</td>
+                                <td>'.$mc['kyhieu'].'</td>
                                 <td>'.$mc['ten'].'</td>
                                 <td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
                                 <td>'.$mc['nguoiky'].'</td>

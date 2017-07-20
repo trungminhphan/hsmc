@@ -3,7 +3,6 @@ class MinhChung {
     const COLLECTION = 'minhchung';
     private $_mongo;
     private $_collection;
-
     public $id = '';
     public $ten = '';
     public $id_tieuchuan = '';
@@ -30,6 +29,10 @@ class MinhChung {
 
     public function get_list_condition($condition){
         return $this->_collection->find($condition)->sort(array('date_post'=>-1));
+    }
+
+    public function get_list_limit($limit){
+        return $this->_collection->find()->sort(array('date_post'=>-1))->limit($limit);
     }
 
     public function get_one(){
