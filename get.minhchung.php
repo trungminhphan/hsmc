@@ -69,7 +69,7 @@ if($act == 'xem'){
             <label class="col-md-2 control-label">Người ký</label>
             <div class="col-md-4 p-t-5">'.$mc['nguoiky'].'</div>
             <label class="col-md-2 control-label">Ngày ký</label>
-            <div class="col-md-4 p-t-5">'.date("d/m/Y", $mc['ngayky']->sec).'</div>
+            <div class="col-md-4 p-t-5">'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">Nội dung</label>

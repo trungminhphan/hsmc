@@ -3,7 +3,10 @@ $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $minhchung = new MinhChung();$tieuchuan = new TieuChuan();
 $minhchung_list = $minhchung->get_all_list();
 $tieuchuan_list = $tieuchuan->get_all_list();
+$tk_tieuchuan = $tieuchuan->get_list_condition(array('id_parent' => ''));
+$tk_tieuchi = $tieuchuan->get_list_condition(array('id_parent' => array('$ne' => '')));
 $minhchung_list = $minhchung->get_list_limit(10);
+
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
@@ -25,8 +28,8 @@ $minhchung_list = $minhchung->get_list_limit(10);
 							<div class="widget widget-stats bg-green">
 								<div class="stats-icon"><i class="fa fa-book"></i></div>
 								<div class="stats-info">
-									<h4>TIÊU CHUẨN - NHÓM TIÊU CHÍ</h4>
-									<p><?php echo $tieuchuan_list->count(); ?></p>	
+									<p>Thống kê</p>	
+									<h4>Tiêu chuẩn: <?php echo $tk_tieuchuan->count(); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tiêu chí: <?php echo $tk_tieuchi->count(); ?></h4>
 								</div>
 								<div class="stats-link">
 									<a href="tieuchuan.html">Chi tiết <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -37,8 +40,8 @@ $minhchung_list = $minhchung->get_list_limit(10);
 							<div class="widget widget-stats bg-blue">
 								<div class="stats-icon"><i class="fa fa-file-pdf-o"></i></div>
 								<div class="stats-info">
-									<h4>MINH CHỨNG</h4>
-									<p><?php echo $minhchung_list->count(); ?></p>	
+									<p>Minh chứng</p>	
+									<h4><?php echo $minhchung_list->count(); ?></h4>
 								</div>
 								<div class="stats-link">
 									<a href="minhchung.html">Chi tiết <i class="fa fa-arrow-circle-o-right"></i></a>

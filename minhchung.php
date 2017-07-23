@@ -31,15 +31,15 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Ký hiệu</th>
+                            <th width="40">Ký hiệu</th>
                             <th>Tên</th>
-                            <th>Ngày ký</th>
+                            <!--<th>Ngày ký</th>
                             <th>Người ký</th>
-                            <th>Ngày nhập</th>
-                            <th>Tiêu chuẩn</th>
-                            <th>Loại văn bản</th>
-                            <th>Người nhập</th>
-                            <th class="text-center">Thao tác</th>
+                            <th>Ngày nhập</th>-->
+                            <th width="70">Tiêu chuẩn</th>
+                            <!--<th>Loại văn bản</th>
+                            <th>Người nhập</th>-->
+                            <th class="text-center" width="60">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,21 +50,22 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             $tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
                             $vb = $loaivanban->get_vanban($mc['id_loaivanban']);
                             $users->id = $mc['id_user']; $u = $users->get_one();
+                            /*<td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
+                            <td>'.$mc['nguoiky'].'</td>
+                            <td>'.date("d/m/Y", $mc['date_post']->sec).'</td>
+                            <td>'.$vb.'</td>
+                            <td>'.$u['person'].'</td>*/
                             echo '<tr>
                                 <td>'.$i.'</td>
-                                <td>'.$mc['kyhieu'].'</td>
-                                <td>'.$mc['ten'].'</td>
-                                <td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
-                                <td>'.$mc['nguoiky'].'</td>
-                                <td>'.date("d/m/Y", $mc['date_post']->sec).'</td>
-                                <td>'.$tc['ten'].'</td>
-                                <td>'.$vb.'</td>
-                                <td>'.$u['person'].'</td>
+                                <td class="text-center">'.$mc['kyhieu'].'</td>
+                                <td>'.$mc['ten'].'</td>                                
+                                <td class="text-center">'.$tc['ten'].'</td>                                
                                 <td class="text-center">
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=copy#modal-minhchung" class="copyminhchung" data-toggle="modal"><i class="fa fa-copy"></i></a>
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=edit#modal-minhchung" class="suaminhchung" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                 <a href="#modal-xoaminhchung" name="'.$mc['_id'].'" data-toggle="modal" onclick="return false;" class="xoaminhchung"><i class="fa fa-trash"></i></a>
+                                <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'"><i class="fa fa-download"></i></a>
                                 </td>
                             </tr>';$i++;
                         }

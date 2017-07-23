@@ -28,6 +28,14 @@ class TieuChuan {
         return $this->_collection->findOne($query);
     }
 
+    public function get_id_by_ma(){
+        $query = array('ma' => trim($this->ma));
+        $field = array('_id' => true);
+        $result = $this->_collection->findOne($query, $field);
+        if(isset($result['_id'])) return $result['_id'];
+        else return false;
+    }
+
     public function insert(){
         $query = array(
             'ma' => $this->ma,

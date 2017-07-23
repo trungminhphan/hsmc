@@ -1,4 +1,4 @@
-<?php require_once('header.php');
+\<?php require_once('header.php');
 $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $tieuchuan = new TieuChuan();$tieuchuan_list = $tieuchuan->get_all_list();
 $id_tieuchuan = isset($_GET['id_tieuchuan']) ? $_GET['id_tieuchuan'] : '';
@@ -42,17 +42,18 @@ if($id_tieuchuan){
     <div class="col-md-12">
         <div class="panel panel-primary">
         	<div class="panel-body">
-        		<table id="data-table" class="table table-striped table-bordered table-hovered">
+        		<table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
                     <thead>
                         <tr>
                             <th>STT</th>
+                            <th width="40">Mã MC</th>
                             <th>Tên</th>
-                            <th>Ngày ký</th>
+                            <!--<th>Ngày ký</th>
                             <th>Người ký</th>
                             <th>Ngày nhập</th>
                             <th>Tiêu chuẩn</th>
                             <th>Loại văn bản</th>
-                            <th>Người nhập</th>
+                            <th>Người nhập</th>-->
                             <th class="text-center">Thao tác</th>
                         </tr>
                     </thead>
@@ -64,17 +65,21 @@ if($id_tieuchuan){
                             $tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
                             $vb = $loaivanban->get_vanban($mc['id_loaivanban']);
                             $users->id = $mc['id_user']; $u = $users->get_one();
-                            echo '<tr>
-                                <td>'.$i.'</td>
-                                <td>'.$mc['ten'].'</td>
-                                <td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
+                            /*
+                            <td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
                                 <td>'.$mc['nguoiky'].'</td>
                                 <td>'.date("d/m/Y", $mc['date_post']->sec).'</td>
                                 <td>'.$tc['ten'].'</td>
                                 <td>'.$vb.'</td>
                                 <td>'.$u['person'].'</td>
+                                */
+                            echo '<tr>
+                                <td>'.$i.'</td>
+                                <td class="text-center">'.$mc['kyhieu'].'</td>
+                                <td>'.$mc['ten'].'</td>
                                 <td class="text-center">
-                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>                              
+                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
+                                <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'"><i class="fa fa-download"></i></a>
                                 </td>
                             </tr>';$i++;
                         }
