@@ -48,6 +48,7 @@ $sheetData_import = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true)
 							} else {
 								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => trim($value['C']).'.pdf', 'type' => 'application/pdf', 'size' => 0));	
 							}
+							$minhchung->orders = $value['I'];
 							$minhchung->ten = $value['D'];
 							$minhchung->id_tieuchuan = $id_tieuchuan;
 							$minhchung->id_loaivanban = '';

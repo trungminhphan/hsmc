@@ -16,7 +16,7 @@ if($id_tieuchuan){
 	//$query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan));
 	//$minhchung_list = $minhchung->get_list_condition($query);
     $minhchung_list = $minhchung->thongketieuchi($arr_tieuchuan);
-   // var_dump($minhchung_list);
+    //var_dump($minhchung_list);
 }
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
@@ -77,7 +77,7 @@ if($id_tieuchuan){
                     if($minhchung_list){
                         $i = 1;
                         foreach ($minhchung_list as $g) {
-                            $list = $minhchung->get_list_condition(array('kyhieu' => $g['_id']));
+                            $list = $minhchung->get_list_condition(array('kyhieu' => $g['_id']['kyhieu']))->sort(array('orders' => 1));
                             //$tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
                             //$vb = $loaivanban->get_vanban($mc['id_loaivanban']);
                             //$users->id = $mc['id_user']; $u = $users->get_one();
@@ -92,20 +92,19 @@ if($id_tieuchuan){
                             /*if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
                                 $class = 'style="color:#ff0000;font-weight:bold;"';
                             } else { $class='';}*/
-
                             if($list){
-                                $key = 0;
+                                $key = 0;$count_rows = $list->count();
                                 foreach($list as $mc){
                                     if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
                                         $class = 'style="color:#ff0000;vertical-align: middle;"';
                                     } else { $class='vertical-align: middle;';}
                                     echo '<tr>';
-                                    if($key == 0 && $g['count'] > 1){
-                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$g['count'].'">'.$i.'</td>';
-                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$g['count'].'"><b>'.$g['_id'].'</b></td>';
+                                    if($key == 0 && $count_rows > 1){
+                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'">'.$i.'</td>';
+                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'"><b>'.$g['_id']['kyhieu'].'</b></td>';
                                     } else if($key == 0){
                                         echo '<td style="vertical-align: middle;" class="text-center">'.$i.'</td>';
-                                        echo '<td style="vertical-align: middle;" class="text-center"><b>'.$g['_id'].'</b></td>';
+                                        echo '<td style="vertical-align: middle;" class="text-center"><b>'.$g['_id']['kyhieu'].'</b></td>';
                                     }
                                     echo '<td '.$class.'>'.$mc['ten'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>';

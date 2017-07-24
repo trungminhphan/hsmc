@@ -4,6 +4,7 @@ class MinhChung {
     private $_mongo;
     private $_collection;
     public $id = '';
+    public $orders = 0;
     public $ten = '';
     public $id_tieuchuan = '';
     public $id_loaivanban = ''; //array();
@@ -24,11 +25,11 @@ class MinhChung {
     }
 
     public function get_all_list(){
-        return $this->_collection->find()->sort(array('date_post'=> -1));
+        return $this->_collection->find()->sort(array('date_post'=> 1));
     }
 
     public function get_list_condition($condition){
-        return $this->_collection->find($condition)->sort(array('date_post'=>-1));
+        return $this->_collection->find($condition)->sort(array('date_post'=>1));
     }
 
     public function get_list_limit($limit){
@@ -42,6 +43,7 @@ class MinhChung {
 
     public function insert(){
         $query = array(
+            'orders' => $this->orders ? intval($this->orders) : 0,
         	'ten' => $this->ten,
         	'id_tieuchuan' => $this->id_tieuchuan ? new Mongoid($this->id_tieuchuan) : '',
         	'id_loaivanban' => $this->id_loaivanban,
@@ -61,6 +63,7 @@ class MinhChung {
 
     public function edit(){
         $query = array('$set' => array(
+            'orders' => $this->orders ? intval($this->orders) : 0,
         	'ten' => $this->ten,
         	'id_tieuchuan' => $this->id_tieuchuan ? new Mongoid($this->id_tieuchuan) : '',
         	'id_loaivanban' => $this->id_loaivanban,
@@ -97,12 +100,11 @@ class MinhChung {
             '$match' => array('id_tieuchuan' => array('$in' => $arr_tieuchuan))
         );
         $sort = array(
-            '$sort' => array('kyhieu' => -1)
+            '$sort' => array('_id.orders' => 1)
         );
         $query = array(
             '$group' => array(
-                '_id' => '$kyhieu',
-                'count' => array('$sum' => 1)
+                '_id' => array('kyhieu' => '$kyhieu', 'orders' => '$orders')
             )
         );
         $result = $this->_collection->aggregate($condition, $query, $sort);
@@ -112,7 +114,7 @@ class MinhChung {
 
     public function thongkenhom(){
         $sort = array(
-            '$sort' => array('kyhieu' => -1)
+            '$sort' => array('kyhieu' => 1)
         );
         $query = array(
             '$group' => array(
