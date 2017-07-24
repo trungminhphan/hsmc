@@ -91,5 +91,38 @@ class MinhChung {
         if(isset($result['_id']) && $result['_id']) return true;
         else return false;
     }
+
+    public function thongketieuchi($arr_tieuchuan){
+        $condition = array(
+            '$match' => array('id_tieuchuan' => array('$in' => $arr_tieuchuan))
+        );
+        $sort = array(
+            '$sort' => array('kyhieu' => -1)
+        );
+        $query = array(
+            '$group' => array(
+                '_id' => '$kyhieu',
+                'count' => array('$sum' => 1)
+            )
+        );
+        $result = $this->_collection->aggregate($condition, $query, $sort);
+        if($result && isset($result['result'])) return $result['result'];
+        return 0;
+    }
+
+    public function thongkenhom(){
+        $sort = array(
+            '$sort' => array('kyhieu' => -1)
+        );
+        $query = array(
+            '$group' => array(
+                '_id' => '$kyhieu',
+                'count' => array('$sum' => 1)
+            )
+        );
+        $result = $this->_collection->aggregate($query, $sort);
+        if($result && isset($result['result'])) return $result['result'];
+        return 0;
+    }    
 }
 ?>

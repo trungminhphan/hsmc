@@ -6,7 +6,7 @@ $tieuchuan_list = $tieuchuan->get_all_list();
 $tk_tieuchuan = $tieuchuan->get_list_condition(array('id_parent' => ''));
 $tk_tieuchi = $tieuchuan->get_list_condition(array('id_parent' => array('$ne' => '')));
 $minhchung_list = $minhchung->get_list_limit(10);
-
+$tk_nhomminhhchung = $minhchung->thongkenhom();
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
@@ -41,7 +41,7 @@ $minhchung_list = $minhchung->get_list_limit(10);
 								<div class="stats-icon"><i class="fa fa-file-pdf-o"></i></div>
 								<div class="stats-info">
 									<p>Minh chứng</p>	
-									<h4><?php echo $minhchung_list->count(); ?></h4>
+									<h4>Nhóm minh chứng: <?php echo count($tk_nhomminhhchung); ?>&nbsp;&nbsp;&nbsp;&nbsp; Minh chứng: <?php echo $minhchung_list->count(); ?></h4>
 								</div>
 								<div class="stats-link">
 									<a href="minhchung.html">Chi tiết <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -59,7 +59,8 @@ $minhchung_list = $minhchung->get_list_limit(10);
 									<li class="media media-sm">
 										<div class="media-body">
 											<h5 class="media-heading"><a href="chitietminhchung.html?id=<?php echo $mc['_id']; ?>"><?php echo $mc['ten']; ?></a></h5>
-											<p>Ngày nhập: <?php echo date("d/m/Y", $mc['date_post']->sec); ?></p>
+											<p>Số, tài liệu, ngày ban hành: <?php echo $mc['sovanban']; ?></p>
+											<p>Nơi ban hành: <?php echo $mc['noiphathanh']; ?></p>
 										</div>
 									</li>
 								<?php endforeach; ?>

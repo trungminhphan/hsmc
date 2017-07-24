@@ -45,18 +45,20 @@ if($keysearch){
     <div class="col-md-12">
         <div class="panel panel-primary">
         	<div class="panel-body">
-        		<table id="data-table" class="table table-striped table-bordered table-hovered">
+        		<table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Tên</th>
-                            <th>Ngày ký</th>
+                            <th width="10" style="vertical-align: middle;">STT</th>
+                            <th width="40" style="vertical-align: middle;">Ký hiệu</th>
+                            <th style="text-align:center;vertical-align: middle;">Tên</th>
+                            <!--<th>Ngày ký</th>
                             <th>Người ký</th>
-                            <th>Ngày nhập</th>
-                            <th>Tiêu chuẩn</th>
-                            <th>Loại văn bản</th>
-                            <th>Người nhập</th>
-                            <th class="text-center">Thao tác</th>
+                            <th>Ngày nhập</th>-->
+                            <th style="text-align: center;vertical-align: middle;" >Số, tài liệu, ngày ban hành</th>
+                            <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
+                            <!--<th>Loại văn bản</th>
+                            <th>Người nhập</th>-->
+                            <th class="text-center" width="60" style="vertical-align: middle;">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,20 +66,26 @@ if($keysearch){
                     if($minhchung_list){
                         $i = 1;
                         foreach ($minhchung_list as $mc) {
-                            $tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
-                            $vb = $loaivanban->get_vanban($mc['id_loaivanban']);
-                            $users->id = $mc['id_user']; $u = $users->get_one();
+                            //$tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
+                            //$vb = $loaivanban->get_vanban($mc['id_loaivanban']);
+                            //$users->id = $mc['id_user']; $u = $users->get_one();
+                            /*<td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
+                            <td>'.$mc['nguoiky'].'</td>
+                            <td>'.date("d/m/Y", $mc['date_post']->sec).'</td>
+                            <td>'.$vb.'</td>
+                            <td>'.$u['person'].'</td>*/
+                            if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
+                                $class = 'style="color:#ff0000;font-weight:bold;vertical-align: middle;"';
+                            } else { $class='vertical-align: middle;';}
                             echo '<tr>
-                                <td>'.$i.'</td>
-                                <td>'.$mc['ten'].'</td>
-                                <td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
-                                <td>'.$mc['nguoiky'].'</td>
-                                <td>'.date("d/m/Y", $mc['date_post']->sec).'</td>
-                                <td>'.$tc['ten'].'</td>
-                                <td>'.$vb.'</td>
-                                <td>'.$u['person'].'</td>
+                                <td class="text-center" style="vertical-align: middle;">'.$i.'</td>
+                                <td '.$class.' class="text-center">'.$mc['kyhieu'].'</td>
+                                <td style="vertical-align: middle;">'.$mc['ten'].'</td>                                
+                                <td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>
+                                <td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>
                                 <td class="text-center">
-                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>                              
+                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
+                                <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>
                                 </td>
                             </tr>';$i++;
                         }

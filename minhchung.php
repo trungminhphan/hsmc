@@ -27,19 +27,20 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
             </div>
             <div class="panel-body">
             	<a href="#modal-minhchung" data-toggle="modal" class="btn btn-primary m-10 themminhchung"><i class="fa fa-plus"></i> Thêm mới</a>
-                <table id="data-table" class="table table-striped table-bordered table-hovered">
+                <table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th width="40">Ký hiệu</th>
-                            <th>Tên</th>
+                            <th width="10" style="vertical-align: middle;">STT</th>
+                            <th width="40" style="vertical-align: middle;">Ký hiệu</th>
+                            <th style="text-align:center;vertical-align: middle;">Tên</th>
                             <!--<th>Ngày ký</th>
                             <th>Người ký</th>
                             <th>Ngày nhập</th>-->
-                            <th width="70">Tiêu chuẩn</th>
+                            <th style="text-align: center;vertical-align: middle;" >Số, tài liệu, ngày ban hành</th>
+                            <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
                             <!--<th>Loại văn bản</th>
                             <th>Người nhập</th>-->
-                            <th class="text-center" width="60">Thao tác</th>
+                            <th class="text-center" width="60" style="vertical-align: middle;">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,25 +48,29 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                     if($minhchung_list){
                         $i = 1;
                         foreach ($minhchung_list as $mc) {
-                            $tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
-                            $vb = $loaivanban->get_vanban($mc['id_loaivanban']);
-                            $users->id = $mc['id_user']; $u = $users->get_one();
+                            //$tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
+                            //$vb = $loaivanban->get_vanban($mc['id_loaivanban']);
+                            //$users->id = $mc['id_user']; $u = $users->get_one();
                             /*<td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
                             <td>'.$mc['nguoiky'].'</td>
                             <td>'.date("d/m/Y", $mc['date_post']->sec).'</td>
                             <td>'.$vb.'</td>
                             <td>'.$u['person'].'</td>*/
+                            if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
+                                $class = 'style="color:#ff0000;font-weight:bold;vertical-align: middle;"';
+                            } else { $class='vertical-align: middle;';}
                             echo '<tr>
-                                <td>'.$i.'</td>
-                                <td class="text-center">'.$mc['kyhieu'].'</td>
-                                <td>'.$mc['ten'].'</td>                                
-                                <td class="text-center">'.$tc['ten'].'</td>                                
+                                <td class="text-center" style="vertical-align: middle;">'.$i.'</td>
+                                <td '.$class.' class="text-center">'.$mc['kyhieu'].'</td>
+                                <td style="vertical-align: middle;">'.$mc['ten'].'</td>                                
+                                <td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>
+                                <td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>
                                 <td class="text-center">
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=copy#modal-minhchung" class="copyminhchung" data-toggle="modal"><i class="fa fa-copy"></i></a>
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=edit#modal-minhchung" class="suaminhchung" data-toggle="modal"><i class="fa fa-edit"></i></a>
                                 <a href="#modal-xoaminhchung" name="'.$mc['_id'].'" data-toggle="modal" onclick="return false;" class="xoaminhchung"><i class="fa fa-trash"></i></a>
-                                <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'"><i class="fa fa-download"></i></a>
+                                <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>
                                 </td>
                             </tr>';$i++;
                         }
@@ -229,9 +234,16 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="assets/plugins/input-mask/jquery.inputmask.js"></script>
 <script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
-<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
-<script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-<script src="assets/js/table-manage-default.demo.min.js"></script>
+    <script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="assets/js/minhchung.js"></script>
 <script src="assets/js/apps.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
@@ -283,6 +295,18 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
         $(".ngaythangnam").datepicker({todayHighlight:!0});
         $(".ngaythangnam").inputmask();
     	$(".select2").select2();$(".progress").hide();
-        App.init();TableManageDefault.init();
+        $("#data-table").DataTable({
+            responsive:!0,
+            "pageLength": 100,
+            //dom:"Bfrtip",
+            dom: '<"top"Bfrtip<"clear">>rt<"bottom"iflp<"clear">>',
+            buttons:[
+                {extend:"excel",className:"btn-sm"},
+                {extend:"pdf",className:"btn-sm"},
+                {extend:"print",className:"btn-sm"}
+            ],
+        });
+        App.init();
+
     });
 </script>

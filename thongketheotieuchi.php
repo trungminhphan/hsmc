@@ -1,11 +1,22 @@
-\<?php require_once('header.php');
+<?php require_once('header.php');
 $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $tieuchuan = new TieuChuan();$tieuchuan_list = $tieuchuan->get_all_list();
 $id_tieuchuan = isset($_GET['id_tieuchuan']) ? $_GET['id_tieuchuan'] : '';
 $minhchung = new MinhChung();$loaivanban = new LoaiVanBan();
+
 if($id_tieuchuan){
-	$query = array('id_tieuchuan' => new MongoId($id_tieuchuan));
-	$minhchung_list = $minhchung->get_list_condition($query);
+    $arr_tieuchuan = array();
+    $list_child = $tieuchuan->get_list_condition(array('id_parent' => new MongoId($id_tieuchuan)));
+    if($list_child){
+        foreach ($list_child as $key => $value) {
+            $arr_tieuchuan[] = new MongoId($value['_id']);
+        }
+    }
+    $arr_tieuchuan[] = new MongoId($id_tieuchuan);
+	//$query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan));
+	//$minhchung_list = $minhchung->get_list_condition($query);
+    $minhchung_list = $minhchung->thongketieuchi($arr_tieuchuan);
+   // var_dump($minhchung_list);
 }
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
@@ -36,8 +47,10 @@ if($id_tieuchuan){
         </div>
     </div>
 </div>
-
 <?php if(isset($minhchung_list) && $minhchung_list): ?>
+<div class="alert alert-success fade in m-b-15">
+    <p class="text-center"><strong>TỔNG CỘNG <?php echo count($minhchung_list); ?> MINH CHỨNG</strong></p>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
@@ -45,26 +58,29 @@ if($id_tieuchuan){
         		<table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th width="40">Mã MC</th>
-                            <th>Tên</th>
+                            <th width="10" style="text-align: center;vertical-align: middle;">STT</th>
+                            <th width="40" style="text-align: center;vertical-align: middle;">Mã MC</th>
+                            <th style="text-align: center;vertical-align: middle;">Tên</th>
+                            <th style="text-align: center;">Số, tài liệu, ngày ban hành</th>
+                            <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
                             <!--<th>Ngày ký</th>
                             <th>Người ký</th>
                             <th>Ngày nhập</th>
                             <th>Tiêu chuẩn</th>
                             <th>Loại văn bản</th>
                             <th>Người nhập</th>-->
-                            <th class="text-center">Thao tác</th>
+                            <th class="text-center" width="70">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php
                     if($minhchung_list){
                         $i = 1;
-                        foreach ($minhchung_list as $mc) {
-                            $tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
-                            $vb = $loaivanban->get_vanban($mc['id_loaivanban']);
-                            $users->id = $mc['id_user']; $u = $users->get_one();
+                        foreach ($minhchung_list as $g) {
+                            $list = $minhchung->get_list_condition(array('kyhieu' => $g['_id']));
+                            //$tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
+                            //$vb = $loaivanban->get_vanban($mc['id_loaivanban']);
+                            //$users->id = $mc['id_user']; $u = $users->get_one();
                             /*
                             <td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
                                 <td>'.$mc['nguoiky'].'</td>
@@ -73,15 +89,45 @@ if($id_tieuchuan){
                                 <td>'.$vb.'</td>
                                 <td>'.$u['person'].'</td>
                                 */
-                            echo '<tr>
-                                <td>'.$i.'</td>
-                                <td class="text-center">'.$mc['kyhieu'].'</td>
+                            /*if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
+                                $class = 'style="color:#ff0000;font-weight:bold;"';
+                            } else { $class='';}*/
+
+                            if($list){
+                                $key = 0;
+                                foreach($list as $mc){
+                                    if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
+                                        $class = 'style="color:#ff0000;vertical-align: middle;"';
+                                    } else { $class='vertical-align: middle;';}
+                                    echo '<tr>';
+                                    if($key == 0 && $g['count'] > 1){
+                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$g['count'].'">'.$i.'</td>';
+                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$g['count'].'"><b>'.$g['_id'].'</b></td>';
+                                    } else if($key == 0){
+                                        echo '<td style="vertical-align: middle;" class="text-center">'.$i.'</td>';
+                                        echo '<td style="vertical-align: middle;" class="text-center"><b>'.$g['_id'].'</b></td>';
+                                    }
+                                    echo '<td '.$class.'>'.$mc['ten'].'</td>';
+                                    echo '<td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>';
+                                    echo '<td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>';
+                                    echo '<td style="vertical-align: middle;" class="text-center">
+                                        <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>
+                                        </td>';
+                                    echo '</tr>';$key++;
+                                }
+                            }
+
+                            /*echo '<tr>
+                                <td class="text-center">'.$i.'</td>
+                                <td class="text-center" '.$class.'>'.$mc['kyhieu'].'</td>
                                 <td>'.$mc['ten'].'</td>
                                 <td class="text-center">
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
                                 <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'"><i class="fa fa-download"></i></a>
                                 </td>
-                            </tr>';$i++;
+                            </tr>';*/
+                            $i++;
                         }
                     }
                     ?>
@@ -108,6 +154,11 @@ if($id_tieuchuan){
     </div>
 </form>
 </div>
+<?php else: ?>
+    <div class="alert alert-danger fade in m-b-15">
+        <strong><i class="fa fa-database"></i> Chưa có dữ liệu!</strong>
+    </div>
+
 <?php endif;?>
 <div style="clear:both;"></div>
 <?php require_once('footer.php'); ?>
@@ -115,9 +166,17 @@ if($id_tieuchuan){
 <script src="assets/plugins/gritter/js/jquery.gritter.js"></script>
 <script src="assets/plugins/select2/dist/js/select2.min.js"></script>
 <script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
-<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<!--<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
 <script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-<script src="assets/js/table-manage-default.demo.min.js"></script><!-- begin page-header -->
+-->
 <script src="assets/js/apps.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 <script>
@@ -132,6 +191,17 @@ if($id_tieuchuan){
     	$("#id_tieuchuan").change(function(){
     		$("#thongkeform").submit();
     	});
-        App.init();TableManageDefault.init();
+        /*$("#data-table").DataTable({
+            responsive:!0,
+            "pageLength": 100,
+            //dom:"Bfrtip",
+            dom: '<"top"Bfrtip<"clear">>rt<"bottom"iflp<"clear">>',
+            buttons:[
+                {extend:"excel",className:"btn-sm"},
+                {extend:"pdf",className:"btn-sm"},
+                {extend:"print",className:"btn-sm"}
+            ],
+        });*/
+        App.init();
     });
 </script>
