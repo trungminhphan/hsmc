@@ -4,7 +4,7 @@ $start = isset($_GET['start']) ? $_GET['start'] : 0;
 $length = isset($_GET['length']) ? $_GET['length'] : 0; 
 $draw = isset($_GET['draw']) ? $_GET['draw'] : 1; 
 $keysearch = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
-$condition = array('$or' => array(array('kyhieu' => new MongoRegex('/' . $keysearch . '/i')), array('ten' => new MongoRegex('/' . $keysearch . '/i')), array('sovanbanden' => new MongoRegex('/' .$keysearch. '/i'))));
+$condition = array('$or' => array(array('kyhieu' => new MongoRegex('/' . $keysearch . '/i')), array('ten' => new MongoRegex('/' . $keysearch . '/i')), array('sovanban' => new MongoRegex('/' .$keysearch. '/i'))));
 $minhchung = new MinhChung();
 $minhchung_list = $minhchung->get_list_to_position_condition($condition, $start, $length);
 $recordsTotal = $minhchung->count_all();
