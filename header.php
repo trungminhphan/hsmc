@@ -129,6 +129,8 @@ $user_default = $users->get_one_default();
                         <li class="divider"></li>
                         <li><a href="thongketheotieuchi.html">Theo Tiêu chuẩn - Tiêu chí</a></li>
                         <li class="divider"></li>
+                        <li><a href="thongkeminhchungchuaco.html">Minh chứng chưa có</a></li>
+                        <li class="divider"></li>
                     </ul>
                 </li>
                 <li>

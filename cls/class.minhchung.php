@@ -32,6 +32,18 @@ class MinhChung {
         return $this->_collection->find($condition)->sort(array('date_post'=>1));
     }
 
+    public function count_all(){
+        return $this->_collection->find()->count();
+    }
+
+    public function get_list_to_position_condition($condition, $position, $limit){
+        return $this->_collection->find($condition)->skip($position)->limit($limit)->sort(array('orders'=>1));
+    }
+
+    public function get_totalFilter($condition){
+        return $this->_collection->find($condition)->count();
+    }
+
     public function get_list_limit($limit){
         return $this->_collection->find()->sort(array('date_post'=>-1))->limit($limit);
     }

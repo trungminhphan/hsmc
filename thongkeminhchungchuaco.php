@@ -26,7 +26,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                 <h4 class="panel-title"><i class="fa fa-list"></i> DANH SÁCH CÁC MINH CHỨNG</h4>
             </div>
             <div class="panel-body">
-            	<a href="#modal-minhchung" data-toggle="modal" class="btn btn-primary m-10 themminhchung"><i class="fa fa-plus"></i> Thêm mới</a>
+                <a href="#modal-minhchung" data-toggle="modal" class="btn btn-primary m-10 themminhchung"><i class="fa fa-plus"></i> Thêm mới</a>
                 <table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
                     <thead>
                         <tr>
@@ -40,41 +40,25 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
                             <!--<th>Loại văn bản</th>
                             <th>Người nhập</th>-->
-                            <th class="text-center" width="60" style="vertical-align: middle;">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php
-                    /*if($minhchung_list){
+                    if($minhchung_list){
                         $i = 1;
                         foreach ($minhchung_list as $mc) {
-                            //$tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
-                            //$vb = $loaivanban->get_vanban($mc['id_loaivanban']);
-                            //$users->id = $mc['id_user']; $u = $users->get_one();
-                            /*<td>'.($mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '').'</td>
-                            <td>'.$mc['nguoiky'].'</td>
-                            <td>'.date("d/m/Y", $mc['date_post']->sec).'</td>
-                            <td>'.$vb.'</td>
-                            <td>'.$u['person'].'</td>
                             if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
                                 $class = 'style="color:#ff0000;font-weight:bold;vertical-align: middle;"';
-                            } else { $class='vertical-align: middle;';}
                             echo '<tr>
                                 <td class="text-center" style="vertical-align: middle;">'.$i.'</td>
                                 <td '.$class.' class="text-center">'.$mc['kyhieu'].'</td>
                                 <td style="vertical-align: middle;">'.$mc['ten'].'</td>                                
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>
-                                <td class="text-center">
-                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=copy#modal-minhchung" class="copyminhchung" data-toggle="modal"><i class="fa fa-copy"></i></a>
-                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>
-                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=edit#modal-minhchung" class="suaminhchung" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                <a href="#modal-xoaminhchung" name="'.$mc['_id'].'" data-toggle="modal" onclick="return false;" class="xoaminhchung"><i class="fa fa-trash"></i></a>
-                                <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>
-                                </td>
                             </tr>';$i++;
+                            }
                         }
-                    }*/
+                    }
                     ?>
                     </tbody>
                 </table>
@@ -84,7 +68,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 </div>
 <div class="modal fade" id="modal-minhchung">
 <form action="post.minhchung.html" method="POST" class="form-horizontal" data-parsley-validate="true" name="minhchungform" id="minhchungform">
-	<input type="hidden" name="id" id="id" />
+    <input type="hidden" name="id" id="id" />
     <input type="hidden" name="act" id="act" />
     <input type="hidden" name="url" id="url" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
     <div class="modal-dialog modal-lg">
@@ -101,29 +85,29 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                     </div>
                 </div>
                 <div class="form-group">
-                	<label class="col-md-2 control-label">Tiêu chí</label>
-                	<div class="col-md-4">
-                		<select name="id_tieuchuan" id="id_tieuchuan" class="select2" style="width:100%">
-                		<?php
+                    <label class="col-md-2 control-label">Tiêu chí</label>
+                    <div class="col-md-4">
+                        <select name="id_tieuchuan" id="id_tieuchuan" class="select2" style="width:100%">
+                        <?php
                         if($tieuchuan_list){
                             $list = iterator_to_array($tieuchuan_list);
                             showCategories($list);
                         }
                         ?>
-                		</select>
-                	</div>
-                	<label class="col-md-2 control-label">Loại văn bản</label>
-                	<div class="col-md-4">
-                	<select name="id_loaivanban[]" id="id_loaivanban" multiple="multiple" class="select2" style="width:100%">
-                	<?php
-                	if($loaivanban_list){
-                		foreach ($loaivanban_list as $vb) {
-                			echo '<option value="'.$vb['_id'].'">'.$vb['ten'].'</option>';
-                		}
-                	}
-                	?>
-                	</select>
-                	</div>
+                        </select>
+                    </div>
+                    <label class="col-md-2 control-label">Loại văn bản</label>
+                    <div class="col-md-4">
+                    <select name="id_loaivanban[]" id="id_loaivanban" multiple="multiple" class="select2" style="width:100%">
+                    <?php
+                    if($loaivanban_list){
+                        foreach ($loaivanban_list as $vb) {
+                            echo '<option value="'.$vb['_id'].'">'.$vb['ten'].'</option>';
+                        }
+                    }
+                    ?>
+                    </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Số văn bản</label>
@@ -136,7 +120,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                     </div>
                 </div>
                 <div class="form-group">
-					<label class="col-md-2 control-label">Ký hiệu</label>
+                    <label class="col-md-2 control-label">Ký hiệu</label>
                     <div class="col-md-4">
                         <input type="text" name="kyhieu" id="kyhieu" value="" class="form-control"/>
                     </div>
@@ -249,7 +233,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <!-- ================== END PAGE LEVEL JS ================== -->
 <script>
     $(document).ready(function() {
-    	upload_files();delete_file();
+        upload_files();delete_file();
         $("#themminhchung").click(function(){
             $("#id").val();$("#act").val();
         });
@@ -294,8 +278,8 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
         });
         $(".ngaythangnam").datepicker({todayHighlight:!0});
         $(".ngaythangnam").inputmask();
-    	$(".select2").select2();$(".progress").hide();
-        /*$("#data-table").DataTable({
+        $(".select2").select2();$(".progress").hide();
+        $("#data-table").DataTable({
             responsive:!0,
             "pageLength": 100,
             //dom:"Bfrtip",
@@ -305,19 +289,8 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                 {extend:"pdf",className:"btn-sm"},
                 {extend:"print",className:"btn-sm"}
             ],
-        });*/
-        $('#data-table').dataTable( {
-            "processing": true,
-            "serverSide": true,
-            "ajax": "dataTable_minhchung.html",
-            responsive:!0, "pageLength": 100,
-            dom: '<"top"Bfrtip<"clear">>rt<"bottom"iflp<"clear">>',
-            buttons:[
-                {extend:"excel",className:"btn-sm"},
-                {extend:"pdf",className:"btn-sm"},
-                {extend:"print",className:"btn-sm"}
-            ]
         });
+        
         App.init();
 
     });
