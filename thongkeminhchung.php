@@ -63,7 +63,7 @@ if($minhchung_list){
             			<td><?php echo format_number($count_danhap); ?></td>
             		</tr>
             		<tr>
-            			<td>Minh con chưa nhập</td>
+            			<td>Minh chứng con chưa nhập</td>
             			<td><?php echo format_number($minhchung_list->count() - ($minhchungtrung->count() + $count_danhap)); ?></td>
             		</tr>
             		<tr>
