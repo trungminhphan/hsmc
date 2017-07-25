@@ -234,27 +234,27 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="assets/plugins/input-mask/jquery.inputmask.js"></script>
 <script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
-    <script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="assets/js/minhchung.js"></script>
 <script src="assets/js/apps.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 <script>
     $(document).ready(function() {
-    	upload_files();delete_file();
+   	upload_files();delete_file();
         $("#themminhchung").click(function(){
             $("#id").val();$("#act").val();
         });
-        $(".suaminhchung").click(function(){
-            var _link = $(this).attr("href");
+        $("#data-table").on( "click", 'tbody tr .suaminhchung', function(){
+           var _link = $(this).attr("href");
             $.getJSON(_link, function(data){
                 $("#id").val(data.id); $("#act").val(data.act);
                 $("#ten").val(data.ten);
@@ -267,7 +267,8 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                 $("#dinhkem_list").html(data.dinhkem);delete_file();
             });
         });
-        $(".copyminhchung").click(function(){
+        //$(".copyminhchung").click(function(){
+        $("#data-table").on( "click", 'tbody tr .copyminhchung', function(){
             var _link = $(this).attr("href");
             $.getJSON(_link, function(data){
                 $("#id").val(""); $("#act").val(data.act);
@@ -282,11 +283,13 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
             });
         });
 
-        $(".xoaminhchung").click(function(){
+        //$(".xoaminhchung").click(function(){
+        $("#data-table").on( "click", 'tbody tr .xoaminhchung', function(){
             var _id = $(this).attr("name");
             $("#id_del").val(_id);
         });
-        $(".xemminhchung").click(function(){
+        //$(".xemminhchung").click(function(){
+        $("#data-table").on( "click", 'tbody tr .xemminhchung', function(){
             var _link = $(this).attr("href");
             $.get(_link, function(data){
                 $("#thongtinminhchung").html(data);
@@ -306,7 +309,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                 {extend:"print",className:"btn-sm"}
             ],
         });*/
-        $('#data-table').dataTable( {
+        $('#data-table').dataTable({
             "processing": true,
             "serverSide": true,
             "ajax": "dataTable_minhchung.html",

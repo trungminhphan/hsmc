@@ -69,6 +69,7 @@ if($id_tieuchuan){
                             <th>Tiêu chuẩn</th>
                             <th>Loại văn bản</th>
                             <th>Người nhập</th>-->
+                            <th class="text-center" width="70">Ghi chú</th>
                             <th class="text-center" width="70">Thao tác</th>
                         </tr>
                     </thead>
@@ -109,6 +110,7 @@ if($id_tieuchuan){
                                     echo '<td '.$class.'>'.$mc['ten'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>';
+                                    echo '<td style="vertical-align: middle;" class="text-center">'.$mc['minhchungtrung'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">
                                         <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
                                         <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>

@@ -9,6 +9,9 @@ class MinhChung {
     public $id_tieuchuan = '';
     public $id_loaivanban = ''; //array();
     public $kyhieu = '';
+    public $maminhchung = '';
+    public $minhchungtrung = '';
+    public $maminhchungtrung = '';
     public $noiphathanh = '';
     public $sovanban = '';
     public $sovanbanden = '';
@@ -60,6 +63,9 @@ class MinhChung {
         	'id_tieuchuan' => $this->id_tieuchuan ? new Mongoid($this->id_tieuchuan) : '',
         	'id_loaivanban' => $this->id_loaivanban,
         	'kyhieu' => $this->kyhieu,
+            'maminhchung' => $this->maminhchung,
+            'minhchungtrung' => $this->minhchungtrung,
+            'maminhchungtrung' => $this->maminhchungtrung,
         	'noiphathanh' => $this->noiphathanh,
         	'sovanban' => $this->sovanban,
         	'sovanbanden' => $this->sovanbanden,
@@ -80,6 +86,9 @@ class MinhChung {
         	'id_tieuchuan' => $this->id_tieuchuan ? new Mongoid($this->id_tieuchuan) : '',
         	'id_loaivanban' => $this->id_loaivanban,
         	'kyhieu' => $this->kyhieu,
+            'maminhchung' => $this->maminhchung,
+            'minhchungtrung' => $this->minhchungtrung,
+            'maminhchungtrung' => $this->maminhchungtrung,
         	'noiphathanh' => $this->noiphathanh,
         	'sovanban' => $this->sovanban,
         	'sovanbanden' => $this->sovanbanden,

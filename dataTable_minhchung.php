@@ -30,7 +30,6 @@ if(isset($minhchung_list) && $minhchung_list){
 		$i++;
 	}
 }
-
 echo json_encode(
   array('draw' => $draw,
         'recordsTotal' => $recordsTotal,

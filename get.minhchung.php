@@ -32,7 +32,7 @@ if($act == 'edit' || $act == 'copy'){
 		'sovanban' => $mc['sovanban'],
 		'sovanbanden' => $mc['sovanbanden'],
 		'nguoiky' => $mc['nguoiky'],
-		'ngayky' => date("d/m/Y", $mc['ngayky']->sec),
+		'ngayky' => $mc['ngayky'] ? date("d/m/Y", $mc['ngayky']->sec) : '',
 		'noidung' => $mc['noidung'],
 		'dinhkem' => $dinhkem
 	);

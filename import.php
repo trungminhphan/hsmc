@@ -3,7 +3,6 @@
 require_once('header.php');
 check_permis($users->is_admin());
 $tieuchuan = new TieuChuan();$minhchung = new MinhChung();
-
 $filename = 'import/minhchung.xlsx';
 require_once('cls/PHPExcel/IOFactory.php');
 $objPHPExcel = PHPExcel_IOFactory::load($filename);
@@ -11,7 +10,6 @@ $sheetData_import = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true)
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
-
 <div class="row">
     <div class="col-md-12 p-20">
     	<div class="panel panel-primary">
@@ -44,15 +42,18 @@ $sheetData_import = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true)
 							$id_tieuchuan = $tieuchuan->get_id_by_ma();
 							$arr_dinhkem = array();
 							if(trim($value['H']) != ''){
-								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => trim($value['H']).'.pdf', 'type' => 'application/pdf', 'size' => 0));	
+								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => str_replace(' ', '',$value['H']).'.pdf', 'type' => 'application/pdf', 'size' => 0));
 							} else {
-								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => trim($value['C']).'.pdf', 'type' => 'application/pdf', 'size' => 0));	
+								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => str_replace(' ', '',$value['C']).'.pdf', 'type' => 'application/pdf', 'size' => 0));	
 							}
 							$minhchung->orders = $value['I'];
 							$minhchung->ten = $value['D'];
 							$minhchung->id_tieuchuan = $id_tieuchuan;
 							$minhchung->id_loaivanban = '';
-							$minhchung->kyhieu = $value['B'];
+							$minhchung->kyhieu = str_replace(' ', '',$value['B']);
+							$minhchung->maminhchung = str_replace(' ', '',$value['C']);
+							$minhchung->minhchungtrung = str_replace(' ', '',$value['G']);
+							$minhchung->maminhchungtrung = str_replace(' ', '',$value['H']);
 							$minhchung->noiphathanh = $value['F'];
 							$minhchung->sovanban = $value['E'];
 							$minhchung->sovanbanden = '';
@@ -66,7 +67,7 @@ $sheetData_import = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true)
 								echo '<td>'.$id_tieuchuan.'</td>';
 								echo '<td>'.$value['A'].'</td>';
 								echo '<td>'.$value['B'].'</td>';
-								echo '<td>'.trim($value['C']).'</td>';
+								echo '<td>'.str_replace(' ', '',$value['C']).'</td>';
 								echo '<td>'.$value['D'].'</td>';
 								echo '<td>'.$value['E'].'</td>';
 								echo '<td>'.$value['F'].'</td>';
