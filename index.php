@@ -29,7 +29,8 @@ $tk_nhomminhhchung = $minhchung->thongkenhom();
 								<div class="stats-icon"><i class="fa fa-book"></i></div>
 								<div class="stats-info">
 									<p>Thống kê</p>	
-									<h4>Tiêu chuẩn: <?php echo $tk_tieuchuan->count(); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tiêu chí: <?php echo $tk_tieuchi->count(); ?></h4>
+									<h4>Tiêu chuẩn: <?php echo $tk_tieuchuan->count(); ?></h4>
+									<h4>Tiêu chí: <?php echo $tk_tieuchi->count(); ?></h4>
 								</div>
 								<div class="stats-link">
 									<a href="tieuchuan.html">Chi tiết <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -41,7 +42,8 @@ $tk_nhomminhhchung = $minhchung->thongkenhom();
 								<div class="stats-icon"><i class="fa fa-file-pdf-o"></i></div>
 								<div class="stats-info">
 									<p>Minh chứng</p>	
-									<h4>Nhóm minh chứng: <?php echo count($tk_nhomminhhchung); ?>&nbsp;&nbsp;&nbsp;&nbsp; Minh chứng: <?php echo $minhchung_list->count(); ?></h4>
+									<h4>Nhóm minh chứng: <?php echo count($tk_nhomminhhchung); ?></h4>
+									<h4>Minh chứng: <?php echo format_number($minhchung_list->count()); ?></h4>
 								</div>
 								<div class="stats-link">
 									<a href="minhchung.html">Chi tiết <i class="fa fa-arrow-circle-o-right"></i></a>

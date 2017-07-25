@@ -125,7 +125,7 @@ $user_default = $users->get_one_default();
                     </a>
                     <ul class="sub-menu">
                     	<li class="divider"></li>
-                        <li><a href="thongketheothoigiannhap.html">Theo thời gian nhập</a></li>
+                        <li><a href="thongkeminhchung.html">Thống kê minh chứng</a></li>
                         <li class="divider"></li>
                         <li><a href="thongketheotieuchi.html">Theo Tiêu chuẩn - Tiêu chí</a></li>
                         <li class="divider"></li>

@@ -15,6 +15,10 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
 <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 <h1 class="page-header"><i class="fa fa-book"></i> QUẢN LÝ MINH CHỨNG</h1>
+<h3 class="text-align:center;">
+    Tổng cộng: <?php echo format_number($minhchung_list->count()); ?>
+    
+</h3>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
@@ -322,6 +326,5 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
             ]
         });
         App.init();
-
     });
 </script>

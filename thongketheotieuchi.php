@@ -76,7 +76,7 @@ if($id_tieuchuan){
                     <tbody>
                     <?php
                     if($minhchung_list){
-                        $i = 1;
+                        $i = 1;$count_minhchung_co = 0; $count_minhchung_chuaco = 0;
                         foreach ($minhchung_list as $g) {
                             $list = $minhchung->get_list_condition(array('kyhieu' => $g['_id']['kyhieu']))->sort(array('orders' => 1));
                             //$tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
@@ -98,7 +98,8 @@ if($id_tieuchuan){
                                 foreach($list as $mc){
                                     if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
                                         $class = 'style="color:#ff0000;vertical-align: middle;"';
-                                    } else { $class='vertical-align: middle;';}
+                                        $count_minhchung_chuaco++;
+                                    } else { $class='vertical-align: middle;';$count_minhchung_co++;}
                                     echo '<tr>';
                                     if($key == 0 && $count_rows > 1){
                                         echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'">'.$i.'</td>';
@@ -134,6 +135,8 @@ if($id_tieuchuan){
                     ?>
                     </tbody>
                 </table>
+                <?php $total = $count_minhchung_co + $count_minhchung_chuaco; ?>
+                <h1 class="page-header"><i class="fa fa-book"></i> Tổng cộng: <?php echo $total; ?>&nbsp;&nbsp;&nbsp; Đã có: <?php echo $count_minhchung_co; ?>&nbsp;&nbsp;&nbsp; Chưa có: <?php echo $count_minhchung_chuaco; ?></h1>
         	</div>
         </div>
     </div>
@@ -159,7 +162,6 @@ if($id_tieuchuan){
     <div class="alert alert-danger fade in m-b-15">
         <strong><i class="fa fa-database"></i> Chưa có dữ liệu!</strong>
     </div>
-
 <?php endif;?>
 <div style="clear:both;"></div>
 <?php require_once('footer.php'); ?>
