@@ -15,7 +15,7 @@ if($id_tieuchuan){
     $arr_tieuchuan[] = new MongoId($id_tieuchuan);
 	//$query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan));
 	//$minhchung_list = $minhchung->get_list_condition($query);
-    $minhchung_list = $minhchung->thongketieuchi($arr_tieuchuan);
+    $minhchung_list = $minhchung->get_distinct($arr_tieuchuan);
     //var_dump($minhchung_list);
 }
 ?>
@@ -77,8 +77,8 @@ if($id_tieuchuan){
                     <?php
                     if($minhchung_list){
                         $i = 1;$count_minhchung_co = 0; $count_minhchung_chuaco = 0;
-                        foreach ($minhchung_list as $g) {
-                            $list = $minhchung->get_list_condition(array('kyhieu' => $g['_id']['kyhieu']))->sort(array('orders' => 1));
+                        foreach ($minhchung_list as $k => $v) {
+                            $list = $minhchung->get_list_condition(array('kyhieu' => $v))->sort(array('orders' => 1));
                             //$tieuchuan->id = $mc['id_tieuchuan']; $tc = $tieuchuan->get_one();
                             //$vb = $loaivanban->get_vanban($mc['id_loaivanban']);
                             //$users->id = $mc['id_user']; $u = $users->get_one();
@@ -103,10 +103,10 @@ if($id_tieuchuan){
                                     echo '<tr>';
                                     if($key == 0 && $count_rows > 1){
                                         echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'">'.$i.'</td>';
-                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'"><b>'.$g['_id']['kyhieu'].'</b></td>';
+                                        echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'"><b>'.$v.'</b></td>';
                                     } else if($key == 0){
                                         echo '<td style="vertical-align: middle;" class="text-center">'.$i.'</td>';
-                                        echo '<td style="vertical-align: middle;" class="text-center"><b>'.$g['_id']['kyhieu'].'</b></td>';
+                                        echo '<td style="vertical-align: middle;" class="text-center"><b>'.$v.'</b></td>';
                                     }
                                     echo '<td '.$class.'>'.$mc['ten'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>';

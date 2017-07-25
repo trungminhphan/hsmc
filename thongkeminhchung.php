@@ -9,7 +9,6 @@ $tk_tieuchi = $tieuchuan->get_list_condition(array('id_parent' => array('$ne' =>
 $minhchung_list = $minhchung->get_all_list();
 $minhchungtrung = $minhchung->get_list_condition(array('maminhchungtrung' => array('$ne' => '')));
 $tk_nhomminhhchung = $minhchung->thongkenhom();
-
 $count_danhap = 0;
 if($minhchung_list){
 	foreach($minhchung_list as $mc){

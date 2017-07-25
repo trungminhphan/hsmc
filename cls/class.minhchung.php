@@ -125,12 +125,17 @@ class MinhChung {
         );
         $query = array(
             '$group' => array(
-                '_id' => array('kyhieu' => '$kyhieu', 'orders' => '$orders')
+                '_id' => array('kyhieu' => '$kyhieu', 'orders' => '$time')
             )
         );
         $result = $this->_collection->aggregate($condition, $query, $sort);
         if($result && isset($result['result'])) return $result['result'];
         return 0;
+    }
+
+    public function get_distinct($arr_tieuchuan){
+        $query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan));
+        return $this->_collection->distinct("kyhieu", $query);
     }
 
     public function thongkenhom(){
