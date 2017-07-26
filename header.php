@@ -72,9 +72,11 @@ $user_default = $users->get_one_default();
 						</a>
 						<ul class="dropdown-menu animated fadeInLeft">
                             <?php if($users->is_admin()) : ?>
-                            <li class="arrow"></li>
-                            <li><a href="users.html"><span class="fa fa-users"></span> Danh sách tài khoản</a></li>
+                            	<li class="arrow"></li>
+                            	<li><a href="users.html"><span class="fa fa-users"></span> Danh sách tài khoản</a></li>
                             <?php endif; ?>
+                            <li class="arrow"></li>
+							<li><a href="change_password.html"><span class="fa fa-refresh"></span> Thay đổi mật khẩu</a></li>
 							<li class="divider"></li>
 							<li><a href="logout.html"><span class="fa fa-sign-out"></span> Đăng xuất</a></li>
 						</ul>
@@ -111,12 +113,14 @@ $user_default = $users->get_one_default();
                     </ul>
                 </li>
             	<?php endif; ?>
+            	<?php if($users->is_admin() || $users->is_manager()) : ?>
                 <li>
                     <a href="minhchung.html">
                         <i class="fa fa-sun-o"></i>
                         <span>MINH CHỨNG</span>
                     </a>
                 </li>
+            	<?php endif; ?>
                 <li class="has-sub">
                     <a href="#">
                     	<b class="caret pull-right"></b>

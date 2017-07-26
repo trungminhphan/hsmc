@@ -107,6 +107,5 @@ $tk_nhomminhhchung = $minhchung->thongkenhom();
 <script>
     $(document).ready(function() {
         App.init();TreeView.init();
-
     });
 </script>

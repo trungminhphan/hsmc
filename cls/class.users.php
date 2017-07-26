@@ -88,7 +88,7 @@ class Users{
 
 	public function reset_password(){
 		$condition = array('_id' => new MongoId($this->id));
-		$query = array('$set' => array('password' => md5($this->password)));
+		$query = array('$set' => array('password' => md5($this->password), 'person' => $this->person));
 		return $this->_collection->update($condition, $query);
 	}
 

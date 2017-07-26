@@ -1,5 +1,6 @@
 <?php
 require_once('header.php');
+check_permis($users->is_admin() && $users->is_manager());
 $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $tieuchuan = new TieuChuan();$tieuchuan_list = $tieuchuan->get_all_list();
 $loaivanban = new LoaiVanBan(); $loaivanban_list = $loaivanban->get_all_list();
