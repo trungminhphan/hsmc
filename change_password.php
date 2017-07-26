@@ -59,13 +59,13 @@ if($id){
             		</div>
             	</div>
             	<div class="form-group">
-            		<label class="col-md-3 control-label">Mật khẩu:</label>
+            		<label class="col-md-3 control-label">Mật khẩu mới:</label>
             		<div class="col-md-6">
 						<input type="password" name="password" id="password" value="<?php echo isset($password) ? $password : ''; ?>" placeholder="Nhập mật khẩu" class="form-control" data-parsley-required="true" />
             		</div>
             	</div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Nhập lại mật khẩu:</label>
+                    <label class="col-md-3 control-label">Nhập lại mật khẩu mới:</label>
                     <div class="col-md-6">
                         <input type="password" name="re_password" id="re_password" value="<?php echo isset($re_password) ? $re_password : ''; ?>" placeholder="Nhập lại mật khẩu" class="form-control" data-parsley-required="true" />
                     </div>
