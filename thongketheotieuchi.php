@@ -21,8 +21,8 @@ if($id_tieuchuan){
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
-<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<!--<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />-->
 <h1 class="page-header"><i class="fa fa-book"></i> THỐNG KÊ THEO TIÊU CHUẨN - TIÊU CHÍ</h1>
 <div class="row">
     <div class="col-md-12">
@@ -94,13 +94,17 @@ if($id_tieuchuan){
                                 $class = 'style="color:#ff0000;font-weight:bold;"';
                             } else { $class='';}*/
                             if($list){
-                                $key = 0;$count_rows = $list->count();
+                                $key = 0;$count_rows = $list->count();$b='';
                                 foreach($list as $mc){
                                     if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
                                         $class = 'style="color:#ff0000;vertical-align: middle;"';
                                         $count_minhchung_chuaco++;
                                     } else { $class='vertical-align: middle;';$count_minhchung_co++;}
-                                    echo '<tr>';
+                                    if($key == 0){
+                                        echo '<tr style="border-top: 3px solid #ccc;">';
+                                    } else {
+                                        echo '<tr>';
+                                    }
                                     if($key == 0 && $count_rows > 1){
                                         echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'">'.$i.'</td>';
                                         echo '<td style="vertical-align: middle;" class="text-center" rowspan="'.$count_rows.'"><b>'.$v.'</b></td>';
@@ -114,9 +118,10 @@ if($id_tieuchuan){
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$mc['minhchungtrung'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">
                                         <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
-                                        <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>
+                                        <a href="download.html?file='.$mc['dinhkem'][0]['aliasname'].'"><i class="fa fa-download"></i></a>
                                         </td>';
                                     echo '</tr>';$key++;
+                                    //if($key == $count_rows) $b = 'style="border-bottom: 3px solid #ff0000;"'; else $b = '';
                                 }
                             }
 

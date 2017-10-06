@@ -9,6 +9,7 @@ class TieuChuan {
     public $ten = '';
     public $id_parent = '';
     public $mota = '';
+    public $orders = 0;
 
     public function __construct(){
         $this->_mongo = DBConnect::init();
@@ -16,11 +17,11 @@ class TieuChuan {
     }
 
     public function get_all_list(){
-        return $this->_collection->find()->sort(array('ma'=>1));
+        return $this->_collection->find()->sort(array('orders'=>1));
     }
 
     public function get_list_condition($condition){
-        return $this->_collection->find($condition)->sort(array('ma'=>1));
+        return $this->_collection->find($condition)->sort(array('orders'=>1));
     }
 
     public function get_one(){
@@ -41,7 +42,8 @@ class TieuChuan {
             'ma' => $this->ma,
             'ten' => $this->ten,
             'id_parent' => $this->id_parent ? new MongoId($this->id_parent) : '',
-            'mota' => $this->mota
+            'mota' => $this->mota,
+            'orders' => intval($this->orders)
         );
         return $this->_collection->insert($query);
     }
@@ -51,7 +53,8 @@ class TieuChuan {
             'ma' => $this->ma,
             'ten' => $this->ten,
             'id_parent' => $this->id_parent ? new MongoId($this->id_parent) : '',
-            'mota' => $this->mota));
+            'mota' => $this->mota,
+            'orders' => intval($this->orders)));
         $condition = array('_id' => new MongoId($this->id));
         return $this->_collection->update($condition, $query);
     }

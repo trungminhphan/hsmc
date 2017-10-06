@@ -5,7 +5,9 @@ $keysearch = isset($_GET['keysearch']) ? $_GET['keysearch'] : '';
 $minhchung = new MinhChung();$loaivanban = new LoaiVanBan();
 if($keysearch){
 	$query = array('$or' => array(
-		array('ten' => new MongoRegex('/'.$keysearch . '/i')),
+        array('kyhieu' => new MongoRegex('/'.$keysearch . '/i')),
+        array('maminhchung' => new MongoRegex('/'.$keysearch . '/i')),
+        array('ten' => new MongoRegex('/'.$keysearch . '/i')),
 		array('noiphathanh' => new MongoRegex('/'.$keysearch . '/i')),
 		array('sovanban' => new MongoRegex('/'.$keysearch . '/i')),
 		array('sovanbanden' => new MongoRegex('/'.$keysearch . '/i')),
@@ -32,7 +34,7 @@ if($keysearch){
         				<input type="text" name="keysearch" id="keysearch" class="form-control" placeholder="Từ khoá tìm kiếm" value="<?php echo isset($keysearch) ? $keysearch : ''; ?>"/>
                     </div>
                     <div class="col-md-2 text-left">
-                    	<button type="submit" name="submit" id="submit" class="btn btn-primary"><i class="fa fa-search"></i> Tìm kiếm</button>
+                    	<button type="submit" name="submit" value="OK" id="submit" class="btn btn-primary"><i class="fa fa-search"></i> Tìm kiếm</button>
                     </div>
         		</div>
         	</form>
@@ -80,12 +82,12 @@ if($keysearch){
                             echo '<tr>
                                 <td class="text-center" style="vertical-align: middle;">'.$i.'</td>
                                 <td '.$class.' class="text-center">'.$mc['kyhieu'].'</td>
-                                <td style="vertical-align: middle;">'.$mc['ten'].'</td>                                
+                                <td style="vertical-align: middle;">'.$mc['ten'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>
                                 <td class="text-center">
                                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
-                                <a href="uploads/'.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>
+                                <a href="download.html?file='.$mc['dinhkem'][0]['aliasname'].'"><i class="fa fa-download"></i></a>
                                 </td>
                             </tr>';$i++;
                         }

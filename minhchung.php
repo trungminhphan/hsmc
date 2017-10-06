@@ -18,7 +18,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <h1 class="page-header"><i class="fa fa-book"></i> QUẢN LÝ MINH CHỨNG</h1>
 <h3 class="text-align:center;">
     Tổng cộng: <?php echo format_number($minhchung_list->count()); ?>
-    
+
 </h3>
 <div class="row">
     <div class="col-md-12">
@@ -43,6 +43,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             <th>Ngày nhập</th>-->
                             <th style="text-align: center;vertical-align: middle;" >Số, tài liệu, ngày ban hành</th>
                             <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
+                            <th style="text-align: center;vertical-align: middle;">Minh chứng trùng</th>
                             <!--<th>Loại văn bản</th>
                             <th>Người nhập</th>-->
                             <th class="text-center" width="60" style="vertical-align: middle;">Thao tác</th>
@@ -67,7 +68,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             echo '<tr>
                                 <td class="text-center" style="vertical-align: middle;">'.$i.'</td>
                                 <td '.$class.' class="text-center">'.$mc['kyhieu'].'</td>
-                                <td style="vertical-align: middle;">'.$mc['ten'].'</td>                                
+                                <td style="vertical-align: middle;">'.$mc['ten'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>
                                 <td class="text-center">
@@ -149,7 +150,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                     <div class="col-md-4">
                         <input type="text" name="noiphathanh" id="noiphathanh" value="" class="form-control" data-parsley-required="true"/>
                     </div>
-                </div>  
+                </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Người ký</label>
                     <div class="col-md-4">
@@ -318,7 +319,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
             "processing": true,
             "serverSide": true,
             "ajax": "dataTable_minhchung.html",
-            responsive:!0, "pageLength": 100,
+            responsive:!0, "pageLength": 10,
             dom: '<"top"Bfrtip<"clear">>rt<"bottom"iflp<"clear">>',
             buttons:[
                 {extend:"excel",className:"btn-sm"},

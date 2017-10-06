@@ -1,6 +1,5 @@
 <?php
 require_once('header.php');
-check_permis($users->is_admin());
 $act = isset($_GET['act']) ? $_GET['act'] : '';
 $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $password = '';

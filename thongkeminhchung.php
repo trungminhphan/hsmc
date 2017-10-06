@@ -6,17 +6,40 @@ $minhchung_list = $minhchung->get_all_list();
 $tieuchuan_list = $tieuchuan->get_all_list();
 $tk_tieuchuan = $tieuchuan->get_list_condition(array('id_parent' => ''));
 $tk_tieuchi = $tieuchuan->get_list_condition(array('id_parent' => array('$ne' => '')));
-$minhchung_list = $minhchung->get_all_list();
-$minhchungtrung = $minhchung->get_list_condition(array('maminhchungtrung' => array('$ne' => '')));
 $tk_nhomminhhchung = $minhchung->thongkenhom();
-$count_danhap = 0;
-if($minhchung_list){
-	foreach($minhchung_list as $mc){
-		if(file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
-			$count_danhap++;
-		}
-	}
+$minhchung_list = $minhchung->get_all_list();
+$sominhchungcannhap = $minhchung->get_list_condition(array('maminhchungtrung' => ''));
+$c = 0;
+if($sominhchungcannhap){
+    foreach($sominhchungcannhap as $mc){
+        if(file_exists('uploads/' .$mc['dinhkem'][0]['aliasname'])){
+            $c++;
+        } 
+    }
 }
+
+/*$ktr = $minhchung->get_list_condition(array('maminhchungtrung' => array('$ne' => '')));
+if($ktr){
+    foreach ($ktr as $k) {
+        if(file_exists('uploads/' . $k['maminhchung'].'.pdf')){
+            echo $k['maminhchung'].'.pdf' . '<br />';
+        }
+    }
+}*/
+//$arr_minhchungtrung = array();
+/*if($minhchung_list){
+    foreach ($minhchung_list as $mc) {
+        if(file_exists('uploads/' .$mc['dinhkem'][0]['aliasname']) || file_exists('uploads/' .$mc['maminhchungtrung'].'.pdf')){
+            $count_file++;
+        } else {
+            echo $mc['maminhchung'].'.pdf-----'.$mc['maminhchungtrung'].'.pdf<br />';
+        }
+    }
+}*/
+/*$minhchungtrungcon = $minhchung->get_list_condition(
+        array('_id' => array('$in' => $arr_minhchungtrung),
+        'maminhchungtrung' => array('$ne' => '')))->count();
+*/
 ?>
 <link href="assets/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet" />
 <link href="assets/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
@@ -32,7 +55,7 @@ if($minhchung_list){
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-body">
-            	<table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
+            	<table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:18px;">
             	<tbody>
             		<tr>
             			<td>Tiêu chuẩn</td>
@@ -47,29 +70,25 @@ if($minhchung_list){
             			<td><?php echo count($tk_nhomminhhchung); ?></td>
             		</tr>
             		<tr>
-            			<td>Tổng số minh chứng con trong nhóm minh chứng</td>
+            			<td>Tổng số minh chứng con.</td>
             			<td><?php echo format_number($minhchung_list->count()); ?></td>
             		</tr>
             		<tr>
-            			<td>Minh chứng con trùng</td>
-            			<td><?php echo format_number($minhchungtrung->count()); ?></td>
-            		</tr>
-            		<tr>
-            			<td>Minh chứng con</td>
-            			<td><?php echo format_number($minhchung_list->count() - $minhchungtrung->count()); ?></td>
-            		</tr>
-            		<tr>
-            			<td>Đã nhập liệu minh chứng con</td>
-            			<td><?php echo format_number($count_danhap); ?></td>
-            		</tr>
-            		<tr>
-            			<td>Minh chứng con chưa nhập</td>
-            			<td><?php echo format_number($minhchung_list->count() - ($minhchungtrung->count() + $count_danhap)); ?></td>
-            		</tr>
-            		<tr>
-            			<td>Đạt</td>
-            			<td><?php echo format_number(round(($count_danhap/($minhchung_list->count() - $minhchungtrung->count())*100),2)); ?> %</td>
-            		</tr>
+                        <td>Số minh chứng CẦN nhập (files)</td>
+                        <td><?php echo format_number($sominhchungcannhap->count()); ?></td>
+                    </tr>
+                    <tr>
+                        <td>Số minh chứng ĐÃ nhập (files)</td>
+                        <td><?php echo format_number($c); ?></td>
+                    </tr>
+                    <tr>
+                        <td>Còn lại (files)</td>
+                        <td><?php echo format_number($sominhchungcannhap->count() - $c); ?></td>
+                    </tr>
+                    <tr>
+                        <td>Tỷ lệ nhập liệu Đạt</td>
+                        <td><?php echo format_decimal(($c/$sominhchungcannhap->count())*100, 2); ?>%</td>
+                    </tr>
             	</tbody>
             	</table>
             </div>

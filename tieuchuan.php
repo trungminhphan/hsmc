@@ -78,6 +78,12 @@ $tieuchuan_list = $tieuchuan->get_all_list();
                         <textarea name="mota" id='mota' class="form-control" placeholder="Mô tả" rows="5"></textarea>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Thứ tự</label>
+                    <div class="col-md-3">
+                        <input type="number" name="orders" id="orders" value="0" class="form-control" data-parsley-required="true"/>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-sm btn-white" data-dismiss="modal">Đóng</a>
@@ -148,6 +154,7 @@ $tieuchuan_list = $tieuchuan->get_all_list();
                     $("#id_parent").val(data.id_parent);$("#id_parent").select2();
                     $("#ma").val(data.ma);
                     $("#mota").val(data.mota);
+                    $("#orders").val(data.orders);
                 }
             });
         });

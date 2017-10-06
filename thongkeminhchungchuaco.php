@@ -4,6 +4,19 @@ $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 $tieuchuan = new TieuChuan();$tieuchuan_list = $tieuchuan->get_all_list();
 $loaivanban = new LoaiVanBan(); $loaivanban_list = $loaivanban->get_all_list();
 $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
+$id_tieuchuan = isset($_GET['id_tieuchuan']) ? $_GET['id_tieuchuan'] : '5926ad56a40183742000003c';
+$list_tieuchuan = $tieuchuan->get_list_condition(array('id_parent' => ''));
+$arr_tieuchuan = array();
+if($id_tieuchuan){
+    $list_child = $tieuchuan->get_list_condition(array('id_parent' => new MongoId($id_tieuchuan)));
+    if($list_child){
+        foreach ($list_child as $key => $value) {
+            $arr_tieuchuan[] = new MongoId($value['_id']);
+        }
+    }
+    $arr_tieuchuan[] = new MongoId($id_tieuchuan);
+    $minhchung_list = $minhchung->get_list_condition(array('id_tieuchuan' => array('$in' => $arr_tieuchuan)))->sort(array('orders' => 1));
+}
 ?>
 <link href="assets/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet" />
 <link href="assets/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
@@ -27,6 +40,13 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
             </div>
             <div class="panel-body">
                 <a href="#modal-minhchung" data-toggle="modal" class="btn btn-primary m-10 themminhchung"><i class="fa fa-plus"></i> Thêm mới</a>
+                <?php
+                echo '<div class="btn-group" style="padding:10px;">';
+                foreach ($list_tieuchuan as $key => $value) {
+                    echo '<a href="thongkeminhchungchuaco.html?id_tieuchuan='.$value['_id'].'" type="button" class="btn btn-white '.($value['_id']==$id_tieuchuan ? 'active' : '').'">'.$value['ten'].'</a>';
+                }
+                echo '</div>';
+                ?>
                 <table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
                     <thead>
                         <tr>
@@ -38,6 +58,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             <th>Ngày nhập</th>-->
                             <th style="text-align: center;vertical-align: middle;" >Số, tài liệu, ngày ban hành</th>
                             <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
+                            <th style="text-align: center;vertical-align: middle;" width="80">Minh chứng trùng</th>
                             <!--<th>Loại văn bản</th>
                             <th>Người nhập</th>-->
                         </tr>
@@ -52,9 +73,10 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             echo '<tr>
                                 <td class="text-center" style="vertical-align: middle;">'.$i.'</td>
                                 <td '.$class.' class="text-center">'.$mc['kyhieu'].'</td>
-                                <td style="vertical-align: middle;">'.$mc['ten'].'</td>                                
+                                <td style="vertical-align: middle;"><b>'.$mc['maminhchung'] .'</b> '.$mc['ten'].'</td>                                
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>
+                                <td style="vertical-align: middle;" class="text-center">'.$mc['maminhchungtrung'].'</td>
                             </tr>';$i++;
                             }
                         }
@@ -66,149 +88,6 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal-minhchung">
-<form action="post.minhchung.html" method="POST" class="form-horizontal" data-parsley-validate="true" name="minhchungform" id="minhchungform">
-    <input type="hidden" name="id" id="id" />
-    <input type="hidden" name="act" id="act" />
-    <input type="hidden" name="url" id="url" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">THÔNG TIN MINH CHỨNG MỚI</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Tên minh chứng</label>
-                    <div class="col-md-10">
-                        <input type="text" name="ten" id="ten" value="" class="form-control" data-parsley-required="true"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Tiêu chí</label>
-                    <div class="col-md-4">
-                        <select name="id_tieuchuan" id="id_tieuchuan" class="select2" style="width:100%">
-                        <?php
-                        if($tieuchuan_list){
-                            $list = iterator_to_array($tieuchuan_list);
-                            showCategories($list);
-                        }
-                        ?>
-                        </select>
-                    </div>
-                    <label class="col-md-2 control-label">Loại văn bản</label>
-                    <div class="col-md-4">
-                    <select name="id_loaivanban[]" id="id_loaivanban" multiple="multiple" class="select2" style="width:100%">
-                    <?php
-                    if($loaivanban_list){
-                        foreach ($loaivanban_list as $vb) {
-                            echo '<option value="'.$vb['_id'].'">'.$vb['ten'].'</option>';
-                        }
-                    }
-                    ?>
-                    </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Số văn bản</label>
-                    <div class="col-md-4">
-                        <input type="text" name="sovanban" id="sovanban" value="" class="form-control"/>
-                    </div>
-                    <label class="col-md-2 control-label">Số văn bản đến</label>
-                    <div class="col-md-4">
-                        <input type="text" name="sovanbanden" id="sovanbanden" value="" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Ký hiệu</label>
-                    <div class="col-md-4">
-                        <input type="text" name="kyhieu" id="kyhieu" value="" class="form-control"/>
-                    </div>
-                    <label class="col-md-2 control-label">Nơi phát hành</label>
-                    <div class="col-md-4">
-                        <input type="text" name="noiphathanh" id="noiphathanh" value="" class="form-control" data-parsley-required="true"/>
-                    </div>
-                </div>  
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Người ký</label>
-                    <div class="col-md-4">
-                        <input type="text" name="nguoiky" id="nguoiky" value="" class="form-control"/>
-                    </div>
-                    <label class="col-md-2 control-label">Ngày ký</label>
-                    <div class="col-md-4">
-                        <input type="text" name="ngayky" id="ngayky" value="" class="form-control ngaythangnam" data-date-format="dd/mm/yyyys" data-inputmask="'alias': 'date'" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Nội dung</label>
-                    <div class="col-md-10">
-                        <textarea name="noidung" id='noidung' class="form-control" placeholder="Nội dung" rows="5"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Đính kèm:</label>
-                    <div class="col-md-6">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="fa fa-plus"></i>
-                            <span>Chọn tập tin đính kèm...</span>
-                            <input type="file" name="dinhkem[]" class="dinhkem" accept="*" multiple="multiple">
-                        </span>
-                    </div>
-                </div>
-                <div class="progress progress-striped active">
-                    <div class="progress-bar" style="width:0%">0%</div>
-                </div>
-                <div id="dinhkem_list">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-sm btn-white" data-dismiss="modal">Đóng</a>
-                <button type="submit" name="submit" id="submit" class="btn btn-sm btn-primary">Lưu</button>
-            </div>
-        </div>
-    </div>
-</form>
-</div>
-<div class="modal fade" id="modal-xemminhchung">
-<form action="post.minhchung.html" method="POST" class="form-horizontal" data-parsley-validate="true" name="minhchungform" id="minhchungform">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"><i class="fa fa-info"></i> THÔNG TIN MINH CHỨNG</h4>
-            </div>
-            <div class="modal-body" id="thongtinminhchung">
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-sm btn-primary" data-dismiss="modal">Đóng</a>
-            </div>
-        </div>
-    </div>
-</form>
-</div>
-
-<div class="modal fade" id="modal-xoaminhchung">
-    <form action="post.minhchung.html" method="POST" class="form-horizontal" data-parsley-validate="true" name="minhchungform" id="minhchungform">
-        <input type="hidden" name="id" id="id_del" />
-        <input type="hidden" name="act" id="act" value="del"/>
-        <input type="hidden" name="url" id="url" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"><i class="fa fa-trash"></i> XÁC NHẬN XOÁ</h4>
-            </div>
-            <div class="modal-body">
-                <h3>Chắc chắn xoá?</h3>
-                <p>Xoá! dữ liệu sẽ bị mất không thể khôi phục.</p>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-sm btn-white" data-dismiss="modal"><i class="fa fa-close"></i> Không xoá</a>
-                <button type="submit" name="submit" id="submit" class="btn btn-sm btn-primary"><i class="fa fa-trash"></i> Đồng ý xoá</button>
-            </div>
-        </div>
-    </form>
-</div>
 <div style="clear:both;"></div>
 <?php require_once('footer.php'); ?>
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
@@ -218,22 +97,22 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="assets/plugins/input-mask/jquery.inputmask.js"></script>
 <script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
-    <script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
-    <script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>-->
 <script type="text/javascript" src="assets/js/minhchung.js"></script>
 <script src="assets/js/apps.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 <script>
     $(document).ready(function() {
-        upload_files();delete_file();
+        /*upload_files();delete_file();
         $("#themminhchung").click(function(){
             $("#id").val();$("#act").val();
         });
@@ -278,7 +157,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
         });
         $(".ngaythangnam").datepicker({todayHighlight:!0});
         $(".ngaythangnam").inputmask();
-        $(".select2").select2();$(".progress").hide();
+        $(".select2").select2();$(".progress").hide();*/
         $("#data-table").DataTable({
             responsive:!0,
             "pageLength": 100,

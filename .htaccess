@@ -1,3 +1,6 @@
 RewriteEngine on
-ErrorDocument 404 /404.html
+Options +FollowSymlinks
+RewriteRule ^view/?([a-zA-Z0-9\-=&_@/\.]+)/?$ hienthi.php?id=$1
 RewriteRule ^(.+)\.html$ $1.php
+#ErrorDocument 404 /404.html
+

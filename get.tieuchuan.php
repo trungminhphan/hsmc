@@ -20,7 +20,8 @@ if($act == 'edit'){
 		'ten' => $dv['ten'],
 		'id_parent' => strval($dv['id_parent']),
 		'ma' => $dv['ma'],
-		'mota' => $dv['mota']
+		'mota' => $dv['mota'],
+		'orders' => isset($dv['orders']) ? $dv['orders'] : 0
 	);
 	echo json_encode($arr);
 }

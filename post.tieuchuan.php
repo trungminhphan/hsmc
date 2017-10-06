@@ -8,12 +8,13 @@ $ten = isset($_POST['ten']) ? $_POST['ten'] : '';
 $id_parent = isset($_POST['id_parent']) ? $_POST['id_parent'] : '';
 $ma = isset($_POST['ma']) ? $_POST['ma'] : '';
 $mota = isset($_POST['mota']) ? $_POST['mota'] : '';
-
+$orders = isset($_POST['orders']) ? $_POST['orders'] : '';
 
 $tieuchuan->ten = $ten;
 $tieuchuan->id_parent = $id_parent;
 $tieuchuan->ma = $ma;
 $tieuchuan->mota = $mota;
+$tieuchuan->orders = $orders;
 
 $l = explode("?", $url); $url = $l[0];
 if($act == 'edit'){

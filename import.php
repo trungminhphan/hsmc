@@ -42,18 +42,18 @@ $sheetData_import = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true)
 							$id_tieuchuan = $tieuchuan->get_id_by_ma();
 							$arr_dinhkem = array();
 							if(trim($value['H']) != ''){
-								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => str_replace(' ', '',$value['H']).'.pdf', 'type' => 'application/pdf', 'size' => 0));
+								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => str_replace(' ', '',trim($value['H'])).'.pdf', 'type' => 'application/pdf', 'size' => 0));
 							} else {
-								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => str_replace(' ', '',$value['C']).'.pdf', 'type' => 'application/pdf', 'size' => 0));	
+								array_push($arr_dinhkem, array('filename' => $value['D'], 'aliasname' => str_replace(' ', '',trim($value['C'])).'.pdf', 'type' => 'application/pdf', 'size' => 0));
 							}
 							$minhchung->orders = $value['I'];
 							$minhchung->ten = $value['D'];
 							$minhchung->id_tieuchuan = $id_tieuchuan;
 							$minhchung->id_loaivanban = '';
 							$minhchung->kyhieu = str_replace(' ', '',$value['B']);
-							$minhchung->maminhchung = str_replace(' ', '',$value['C']);
+							$minhchung->maminhchung = str_replace(' ', '',trim($value['C']));
 							$minhchung->minhchungtrung = str_replace(' ', '',$value['G']);
-							$minhchung->maminhchungtrung = str_replace(' ', '',$value['H']);
+							$minhchung->maminhchungtrung = str_replace(' ', '',trim($value['H']));
 							$minhchung->noiphathanh = $value['F'];
 							$minhchung->sovanban = $value['E'];
 							$minhchung->sovanbanden = '';
