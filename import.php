@@ -3,7 +3,7 @@
 require_once('header.php');
 check_permis($users->is_admin());
 $tieuchuan = new TieuChuan();$minhchung = new MinhChung();
-$filename = 'import/minhchung.xlsx';
+$filename = 'import/minhchung_BS.xlsx';
 require_once('cls/PHPExcel/IOFactory.php');
 $objPHPExcel = PHPExcel_IOFactory::load($filename);
 $sheetData_import = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
@@ -74,7 +74,7 @@ $sheetData_import = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true)
 								echo '<td>'.$value['H'].'</td>';
 								echo '</tr>';
 							}
-							
+
 						}
 					}
                 }

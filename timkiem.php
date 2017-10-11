@@ -17,7 +17,6 @@ if($keysearch){
 	//$query = array('ten' => new MongoRegex('/'.$keysearch . '/i'));
 	$minhchung_list = $minhchung->get_list_condition($query);
 }
-
 ?>
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
@@ -60,6 +59,7 @@ if($keysearch){
                             <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
                             <!--<th>Loại văn bản</th>
                             <th>Người nhập</th>-->
+                            <th width="80">Dung lượng</th>
                             <th class="text-center" width="60" style="vertical-align: middle;">Thao tác</th>
                         </tr>
                     </thead>
@@ -78,18 +78,28 @@ if($keysearch){
                             <td>'.$u['person'].'</td>*/
                             if(!file_exists('uploads/' . $mc['dinhkem'][0]['aliasname'])){
                                 $class = 'style="color:#ff0000;font-weight:bold;vertical-align: middle;"';
-                            } else { $class='vertical-align: middle;';}
+                                $filesize = '';
+                            } else {
+                                $class='vertical-align: middle;';
+                                $filesize = filesize('uploads/' . $mc['dinhkem'][0]['aliasname']);
+                                $filesize = round($filesize/1048576,2) . ' MB';
+                            }
                             echo '<tr>
                                 <td class="text-center" style="vertical-align: middle;">'.$i.'</td>
                                 <td '.$class.' class="text-center">'.$mc['kyhieu'].'</td>
                                 <td style="vertical-align: middle;">'.$mc['ten'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>
                                 <td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>
-                                <td class="text-center">
-                                <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
-                                <a href="download.html?file='.$mc['dinhkem'][0]['aliasname'].'"><i class="fa fa-download"></i></a>
-                                </td>
-                            </tr>';$i++;
+                                <td style="vertical-align: middle;" class="text-center">'.$filesize.'</td>';
+                                if($users->get_username() =='dhag' && in_array($mc['dinhkem'][0]['aliasname'], $arr_visible)){
+                                    echo '<td></td>';
+                                } else {
+                                    echo '<td style="vertical-align: middle;" class="text-center">
+                                        <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
+                                        <a href="download.html?file='.$mc['dinhkem'][0]['aliasname'].'" target="_blank"><i class="fa fa-download"></i></a>
+                                    </td>';
+                                }
+                            echo '</tr>';$i++;
                         }
                     }
                     ?>

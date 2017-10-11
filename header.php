@@ -67,7 +67,7 @@ $user_default = $users->get_one_default();
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown navbar-user">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-user"></i> 
+							<i class="fa fa-user"></i>
 							<span class="hidden-xs"><?php echo $user_default['person']; ?></span> <b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu animated fadeInLeft">
@@ -76,8 +76,10 @@ $user_default = $users->get_one_default();
                             	<li><a href="users.html"><span class="fa fa-users"></span> Danh sách tài khoản</a></li>
                             <?php endif; ?>
                             <li class="arrow"></li>
-							<li><a href="change_password.html"><span class="fa fa-refresh"></span> Thay đổi mật khẩu</a></li>
-							<li class="divider"></li>
+                            <?php if($users->get_username() != 'dhag'): ?>
+							 <li><a href="change_password.html"><span class="fa fa-refresh"></span> Thay đổi mật khẩu</a></li>
+							 <li class="divider"></li>
+                            <?php endif; ?>
 							<li><a href="logout.html"><span class="fa fa-sign-out"></span> Đăng xuất</a></li>
 						</ul>
 					</li>
@@ -124,7 +126,7 @@ $user_default = $users->get_one_default();
                 <li class="has-sub">
                     <a href="#">
                     	<b class="caret pull-right"></b>
-                        <i class="fa fa-bar-chart-o"></i> 
+                        <i class="fa fa-bar-chart-o"></i>
                         <span>THỐNG KÊ MINH CHỨNG</span>
                     </a>
                     <ul class="sub-menu">
@@ -137,9 +139,27 @@ $user_default = $users->get_one_default();
                         <li class="divider"></li>
                     </ul>
                 </li>
+                <li class="has-sub">
+                    <a href="#">
+                      <b class="caret pull-right"></b>
+                        <i class="fa fa-briefcase"></i>
+                        <span>MINH CHỨNG BỔ SUNG</span>
+                    </a>
+                    <ul class="sub-menu">
+                      <li class="divider"></li>
+                        <li><a href="bosungphuluc_a.html">Bổ sung theo phu lục A</a></li>
+                        <li class="divider"></li>
+                        <li><a href="bosungphuluc_c.html">Bổ sung theo phu lục C</a></li>
+                        <li class="divider"></li>
+                        <li><a href="minhchungsau_15062017.html">Minh chứng sau ngày 15/06</a></li>
+                        <li class="divider"></li>
+                        <li><a href="minhchung_csdl.html">Minh chứng CSDL</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="timkiem.html">
-                        <i class="fa fa-search"></i> 
+                        <i class="fa fa-search"></i>
                         <span>TÌM KIẾM</span>
                     </a>
                 </li>
@@ -152,3 +172,4 @@ $user_default = $users->get_one_default();
 		<!-- end #top-menu -->
 		<!-- begin #content -->
 		<div id="content" class="content">
+

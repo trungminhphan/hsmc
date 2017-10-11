@@ -13,9 +13,9 @@ if($id_tieuchuan){
         }
     }
     $arr_tieuchuan[] = new MongoId($id_tieuchuan);
-	//$query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan));
-	//$minhchung_list = $minhchung->get_list_condition($query);
-    $minhchung_list = $minhchung->get_distinct($arr_tieuchuan);
+  //$query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan));
+  //$minhchung_list = $minhchung->get_list_condition($query);
+    $minhchung_list = $minhchung->get_distinct_a($arr_tieuchuan);
     //var_dump($minhchung_list);
 }
 ?>
@@ -23,27 +23,27 @@ if($id_tieuchuan){
 <link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
 <!--<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />-->
-<h1 class="page-header"><i class="fa fa-book"></i> THỐNG KÊ THEO TIÊU CHUẨN - TIÊU CHÍ</h1>
+<h1 class="page-header"><i class="fa fa-book"></i> MINH CHỨNG BỔ SUNG THEO PHỤ LỤC A</h1>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
-        	<div class="panel-body">
-        		<div class="form-group">
-        			<div class="col-md-12">
-        			<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="GET" class="form-horizontal" name="thongkeform" id="thongkeform">
+          <div class="panel-body">
+            <div class="form-group">
+              <div class="col-md-12">
+              <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="GET" class="form-horizontal" name="thongkeform" id="thongkeform">
                         <select name="id_tieuchuan" id="id_tieuchuan" class="form-control select2" style="width:100%;">
-                        	<option value="">Chọn Tiêu chuẩn - Tiêu chí</option>
-                        	<?php
-	                        if($tieuchuan_list){
-	                            $list = iterator_to_array($tieuchuan_list);
-	                            showCategories($list, '', '', array($id_tieuchuan));
-	                        }
-	                        ?>
+                          <option value="">Chọn Tiêu chuẩn - Tiêu chí</option>
+                          <?php
+                          if($tieuchuan_list){
+                              $list = iterator_to_array($tieuchuan_list);
+                              showCategories($list, '', '', array($id_tieuchuan));
+                          }
+                          ?>
                         </select>
                     </form>
                     </div>
-        		</div>
-        	</div>
+            </div>
+          </div>
         </div>
     </div>
 </div>
@@ -54,8 +54,8 @@ if($id_tieuchuan){
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
-        	<div class="panel-body">
-        		<table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
+          <div class="panel-body">
+            <table id="data-table" class="table table-striped table-bordered table-hovered" style="font-size:12px;">
                     <thead>
                         <tr>
                             <th width="10" style="text-align: center;vertical-align: middle;">STT</th>
@@ -121,7 +121,7 @@ if($id_tieuchuan){
                                     echo '<td '.$class.'>'.$mc['ten'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$mc['sovanban'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$mc['noiphathanh'].'</td>';
-                                    echo '<td style="vertical-align: middle;" class="text-center">'.$mc['minhchungtrung'].'</td>';
+                                    echo '<td style="vertical-align: middle;" class="text-center">'.$mc['maminhchungtrung'].'</td>';
                                     echo '<td style="vertical-align: middle;" class="text-center">'.$filesize.'</td>';
                                     if($users->get_username() =='dhag' && in_array($mc['dinhkem'][0]['aliasname'], $arr_visible)){
                                         echo '<td></td>';
@@ -153,7 +153,7 @@ if($id_tieuchuan){
                 </table>
                 <?php $total = $count_minhchung_co + $count_minhchung_chuaco; ?>
                 <h1 class="page-header"><i class="fa fa-book"></i> Tổng cộng: <?php echo $total; ?>&nbsp;&nbsp;&nbsp; Đã có: <?php echo $count_minhchung_co; ?>&nbsp;&nbsp;&nbsp; Chưa có: <?php echo $count_minhchung_chuaco; ?></h1>
-        	</div>
+          </div>
         </div>
     </div>
 </div>
@@ -200,16 +200,16 @@ if($id_tieuchuan){
 <!-- ================== END PAGE LEVEL JS ================== -->
 <script>
     $(document).ready(function() {
-    	$(".select2").select2();
-    	$(".xemminhchung").click(function(){
+      $(".select2").select2();
+      $(".xemminhchung").click(function(){
             var _link = $(this).attr("href");
             $.get(_link, function(data){
                 $("#thongtinminhchung").html(data);
             });
         });
-    	$("#id_tieuchuan").change(function(){
-    		$("#thongkeform").submit();
-    	});
+      $("#id_tieuchuan").change(function(){
+        $("#thongkeform").submit();
+      });
         /*$("#data-table").DataTable({
             responsive:!0,
             "pageLength": 100,

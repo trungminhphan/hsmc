@@ -28,7 +28,7 @@ if($id){
 	$username = $edit_user['username'];
 	$password = '';
 	$person = $edit_user['person'];
-    
+
 }
 ?>
 <link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
@@ -37,6 +37,9 @@ if($id){
 <link href="assets/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" />
 <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
 <link href="assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
+<?php if($users->get_username() == 'dhag'): ?>
+    <h1>Không có quyền</h1>
+<?php else: ?>
 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" id="adduserform" class="form-horizontal" data-parsley-validate="true" enctype="multipart/form-data">
 <div class="row">
     <div class="col-md-12">
@@ -84,6 +87,7 @@ if($id){
     </div>
 </div>
 </form>
+<?php endif; ?>
 <?php require_once('footer.php'); ?>
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
 <script src="assets/plugins/gritter/js/jquery.gritter.js"></script>

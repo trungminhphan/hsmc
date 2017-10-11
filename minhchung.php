@@ -18,7 +18,6 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
 <h1 class="page-header"><i class="fa fa-book"></i> QUẢN LÝ MINH CHỨNG</h1>
 <h3 class="text-align:center;">
     Tổng cộng: <?php echo format_number($minhchung_list->count()); ?>
-
 </h3>
 <div class="row">
     <div class="col-md-12">
@@ -44,6 +43,7 @@ $minhchung = new MinhChung(); $minhchung_list = $minhchung->get_all_list();
                             <th style="text-align: center;vertical-align: middle;" >Số, tài liệu, ngày ban hành</th>
                             <th style="text-align: center;vertical-align: middle;">Nơi ban hành</th>
                             <th style="text-align: center;vertical-align: middle;">Minh chứng trùng</th>
+                            <th>Dung lượng</th>
                             <!--<th>Loại văn bản</th>
                             <th>Người nhập</th>-->
                             <th class="text-center" width="60" style="vertical-align: middle;">Thao tác</th>

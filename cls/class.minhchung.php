@@ -138,6 +138,11 @@ class MinhChung {
         return $this->_collection->distinct("kyhieu", $query);
     }
 
+    public function get_distinct_a($arr_tieuchuan){
+        $query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan), 'kyhieu' => new MongoRegex('/^BSA/'));
+        return $this->_collection->distinct("kyhieu", $query);
+    }
+
     public function thongkenhom(){
         $sort = array(
             '$sort' => array('kyhieu' => 1)
@@ -151,6 +156,6 @@ class MinhChung {
         $result = $this->_collection->aggregate($query, $sort);
         if($result && isset($result['result'])) return $result['result'];
         return 0;
-    }    
+    }
 }
 ?>

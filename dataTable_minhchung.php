@@ -14,14 +14,20 @@ if(isset($minhchung_list) && $minhchung_list){
 	$i= $start+1;
 	foreach ($minhchung_list as $mc) {
 		if(!file_exists('uploads/'.$mc['dinhkem'][0]['aliasname'])){
+      $filesize = '';//filesize('uploads/'.$mc['dinhkem'][0]['aliasname']);
 			$class = 'style="color:#ff0000;font-weight:bold;vertical-align: middle;"';
-        } else { $class='style="vertical-align: middle;"'; }
+    } else {
+      $class='style="vertical-align: middle;"';
+      $filesize = filesize('uploads/'.$mc['dinhkem'][0]['aliasname']);
+      $filesize = round($filesize/1048576,2) . ' MB';
+    }
 		array_push($arr_minhchung, array(
 				$i,'<div '.$class.'>' . $mc['kyhieu'] . '</div>',
 				$mc['maminhchung'].' '.$mc['ten'],
 				$mc['sovanban'],
 				$mc['noiphathanh'],
 				$mc['maminhchungtrung'],
+        $filesize,
 				'<a href="get.minhchung.html?id='.$mc['_id'].'&act=copy#modal-minhchung" class="copyminhchung" data-toggle="modal"><i class="fa fa-copy"></i></a>
                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=xem#modal-xemminhchung" class="xemminhchung" data-toggle="modal""><i class="fa fa-eye"></i></a>
                 <a href="get.minhchung.html?id='.$mc['_id'].'&act=edit#modal-minhchung" class="suaminhchung" data-toggle="modal"><i class="fa fa-edit"></i></a>
