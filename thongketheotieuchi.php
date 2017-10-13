@@ -176,7 +176,7 @@ if($id_tieuchuan){
 </div>
 <?php else: ?>
     <div class="alert alert-danger fade in m-b-15">
-        <strong><i class="fa fa-database"></i> Chưa có dữ liệu!</strong>
+        <strong><i class="fa fa-database"></i> Chưa có dữ liệu hoặc chưa chọn Tiêu chuẩn, tiêu chí!</strong>
     </div>
 <?php endif;?>
 <div style="clear:both;"></div>

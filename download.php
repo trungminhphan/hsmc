@@ -1,17 +1,14 @@
 <?php
 require_once('header_none.php');
-$linkfile = new LinkFile();
+//$linkfile = new LinkFile();
 $filename = isset($_GET['file']) ? $_GET['file'] : '';
-$file = $linkfile->get_one_condition(array('filename' => $filename));
+//$file = $linkfile->get_one_condition(array('filename' => $filename));
 
 if($users->get_username() =='dhag' && in_array($filename, $arr_visible)){
     echo 'Sorry! Không được phép xem.';
-} else if($file['link']){
-    transfers_to($file['link']);
 } else  {
     ini_set('memory_limit', '-1');
     $file_path = 'uploads/'.$filename;
-
     if (file_exists($file_path)) {
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');

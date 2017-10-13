@@ -143,6 +143,31 @@ class MinhChung {
         return $this->_collection->distinct("kyhieu", $query);
     }
 
+    public function get_distinct_c($arr_tieuchuan){
+        $query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan), 'kyhieu' => new MongoRegex('/^BSC/'));
+        return $this->_collection->distinct("kyhieu", $query);
+    }
+
+    public function get_distinct_m($arr_tieuchuan){
+        $query = array('id_tieuchuan' => array('$in' => $arr_tieuchuan), 'kyhieu' => new MongoRegex('/^MH/'));
+        return $this->_collection->distinct("kyhieu", $query);
+    }
+
+    public function get_list_b(){
+        $query = array('$or' => array(
+                array('kyhieu' => new MongoRegex('/^B1/')),
+                array('kyhieu' => new MongoRegex('/^B2/')),
+                array('kyhieu' => new MongoRegex('/^B3/')),
+                array('kyhieu' => new MongoRegex('/^B4/')),
+                array('kyhieu' => new MongoRegex('/^B5/')),
+                array('kyhieu' => new MongoRegex('/^B6/')),
+                array('kyhieu' => new MongoRegex('/^B7/')),
+                array('kyhieu' => new MongoRegex('/^B8/')),
+                array('kyhieu' => new MongoRegex('/^B9/'))
+            ));
+        return $this->_collection->find($query);
+    }
+
     public function thongkenhom(){
         $sort = array(
             '$sort' => array('kyhieu' => 1)
